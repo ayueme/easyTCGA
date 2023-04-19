@@ -10,7 +10,6 @@
 #' @return survival analysis resaults
 #' @export
 
-globalVariables(c('as.formula','pchisq','na.omit'))
 batch_survival <- function(exprset, clin, expr_type=c("counts","tpm","fpkm"),
                            project, min_sample_size=5,
                            print_index = TRUE
@@ -50,7 +49,7 @@ batch_survival <- function(exprset, clin, expr_type=c("counts","tpm","fpkm"),
     if(length(table(group)) == 1) next
     if(length(grep("high",group)) < min_sample_size) next
     if(length(grep("low",group)) < min_sample_size) next
-    surv <- as.formula(paste('Surv(time, event)~', "group"))
+    surv <- stats::as.formula(paste('Surv(time, event)~', "group"))
     #tmp <- cbind(expr_clin[,1:2],group)
     x <- survival::coxph(surv, data = expr_clin)
     tmp1 <- broom::tidy(x,exponentiate = T, conf.int = T)
@@ -70,10 +69,10 @@ batch_survival <- function(exprset, clin, expr_type=c("counts","tpm","fpkm"),
     if(length(table(group)) == 1) next
     if(length(grep("high",group)) < min_sample_size) next
     if(length(grep("low",group)) < min_sample_size) next
-    surv <- as.formula(paste('Surv(time, event)~', "group"))
+    surv <- stats::as.formula(paste('Surv(time, event)~', "group"))
     #tmp <- cbind(expr_clin[,1:2],group)
     x <- survival::survdiff(surv, data = expr_clin)
-    pValue <- 1-pchisq(x$chisq,df=1)
+    pValue <- 1-stats::pchisq(x$chisq,df=1)
     logrank.result[[i]] <- c(gene[i],pValue)
   }
 

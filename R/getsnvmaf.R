@@ -5,7 +5,6 @@
 #' @return maf file
 #' @export
 
-globalVariables(c('data'))
 getsnvmaf <- function(project){
 
   if (!file.exists("output_snv")) {

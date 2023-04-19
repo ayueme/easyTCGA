@@ -30,7 +30,7 @@ diff_analysis <- function(exprset, project, save = FALSE){
   res <- DESeq2::results(dds, tidy = T)
 
   names(res)[1] <- "genesymbol"
-  deg_deseq2 <- na.omit(res)
+  deg_deseq2 <- stats::na.omit(res)
 
   res_diffe[[1]] <- deg_deseq2
   names(res_diffe)[[1]] <- "deg_deseq2"
@@ -51,7 +51,7 @@ diff_analysis <- function(exprset, project, save = FALSE){
   fit2 <- limma::eBayes(fit)
 
   DEG2 <- limma::topTable(fit2, coef=2, n=Inf)
-  deg_limma <- na.omit(DEG2)
+  deg_limma <- stats::na.omit(DEG2)
   deg_limma$genesymbol <- rownames(deg_limma)
 
   res_diffe[[2]] <- deg_limma

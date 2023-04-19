@@ -2,7 +2,7 @@ Package: easyTCGA
 Title: Make TCGA analysis easy
 Version: 0.0.0.9000
 Authors@R: 
-    person("Yue", "Li", , "1272246204@qq.com", role = c("aut", "cre"))
+    person(given = "Yue", family = "Li", , "1272246204@qq.com", role = c("aut", "cre"))
 Description: This packages provides several powerful functions to speed up the
     TCGA analysis.
 License: MIT + file LICENSE

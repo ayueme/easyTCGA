@@ -5,7 +5,6 @@
 #' @return expression set and clinical info
 #' @export
 
-globalVariables(c('data'))
 getmrnaexpr <- function(project) {
   if (!file.exists("output_mRNA_lncRNA_expr")) {
     dir.create("output_mRNA_lncRNA_expr")
