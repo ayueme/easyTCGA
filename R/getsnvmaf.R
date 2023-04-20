@@ -1,8 +1,48 @@
 #' Get GDC TCGA MAF files
 #'
-#' @param project a TCGA project
+#' @description This function can automatically download and prepare the TCGA
+#'     maf files(masked annotated somatic mutation) with the corresponding
+#'     clinical information. The output can be directly used by
+#'     maftools::read_maf() function.
+#' @param project one of 33 TCGA projects
+#' \itemize{
+#' \item{ TCGA-ACC }
+#' \item{ TCGA-BLCA }
+#' \item{ TCGA-BRCA }
+#' \item{ TCGA-CESC }
+#' \item{ TCGA-CHOL }
+#' \item{ TCGA-COAD }
+#' \item{ TCGA-DLBC }
+#' \item{ TCGA-ESCA }
+#' \item{ TCGA-GBM }
+#' \item{ TCGA-HNSC }
+#' \item{ TCGA-KICH }
+#' \item{ TCGA-KIRC }
+#' \item{ TCGA-KIRP }
+#' \item{ TCGA-LAML }
+#' \item{ TCGA-LGG }
+#' \item{ TCGA-LIHC }
+#' \item{ TCGA-LUAD }
+#' \item{ TCGA-LUSC }
+#' \item{ TCGA-MESO }
+#' \item{ TCGA-OV }
+#' \item{ TCGA-PAAD }
+#' \item{ TCGA-PCPG }
+#' \item{ TCGA-PRAD }
+#' \item{ TCGA-READ }
+#' \item{ TCGA-SARC }
+#' \item{ TCGA-SKCM }
+#' \item{ TCGA-STAD }
+#' \item{ TCGA-TGCT }
+#' \item{ TCGA-THCA }
+#' \item{ TCGA-THYM }
+#' \item{ TCGA-UCEC }
+#' \item{ TCGA-UCS }
+#' \item{ TCGA-UVM }
+#' }
 #'
-#' @return maf file
+#' @return maf file and clinical information, which can be directly used by
+#'     maftools::read_maf(). The data are saved in the directory of "output_snv"
 #' @export
 
 getsnvmaf <- function(project){

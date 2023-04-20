@@ -1,13 +1,19 @@
 #' Batch survival analysis
 #'
-#' @param exprset expression set prepared by getmrnaexpr()
+#' @description This function can automatically do the univariate cox regression
+#'    and log-rank test according to the median of gene expression(no other
+#'    choice for current version).
+#' @param exprset expression matrix prepared by getmrnaexpr()
 #' @param clin clinical information prepared by getmrnaexpr()
-#' @param expr_type type of expression set
+#' @param expr_type type of expression matrix, one of counts, tpm, fpkm. If
+#'     "counts", the expression matrix will be transformed by DESeq2::vst(), if
+#'     "tpm" or "fpkm", it will be transformed by log2(x + 0.1)
 #' @param project a TCGA project
-#' @param min_sample_size min sample size
+#' @param min_sample_size min sample size of each group for survival analysis,
+#'     default is 5
 #' @param print_index print index, default is "TRUE"
 #'
-#' @return survival analysis resaults
+#' @return a list of survival analysis results, both logrank and cox regression
 #' @export
 
 batch_survival <- function(exprset, clin, expr_type=c("counts","tpm","fpkm"),

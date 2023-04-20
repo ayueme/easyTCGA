@@ -2,16 +2,58 @@
 % Please edit documentation in R/getmrnaexpr.R
 \name{getmrnaexpr}
 \alias{getmrnaexpr}
-\title{Get GDC TCGA mRNA and lncRNA expression set and clinical info}
+\title{Get TCGA mRNA/lncRNA expression matrix and clinical information}
 \usage{
 getmrnaexpr(project)
 }
 \arguments{
-\item{project}{a TCGA project}
+\item{project}{one of 33 TCGA projects
+\itemize{
+\item{ TCGA-ACC }
+\item{ TCGA-BLCA }
+\item{ TCGA-BRCA }
+\item{ TCGA-CESC }
+\item{ TCGA-CHOL }
+\item{ TCGA-COAD }
+\item{ TCGA-DLBC }
+\item{ TCGA-ESCA }
+\item{ TCGA-GBM }
+\item{ TCGA-HNSC }
+\item{ TCGA-KICH }
+\item{ TCGA-KIRC }
+\item{ TCGA-KIRP }
+\item{ TCGA-LAML }
+\item{ TCGA-LGG }
+\item{ TCGA-LIHC }
+\item{ TCGA-LUAD }
+\item{ TCGA-LUSC }
+\item{ TCGA-MESO }
+\item{ TCGA-OV }
+\item{ TCGA-PAAD }
+\item{ TCGA-PCPG }
+\item{ TCGA-PRAD }
+\item{ TCGA-READ }
+\item{ TCGA-SARC }
+\item{ TCGA-SKCM }
+\item{ TCGA-STAD }
+\item{ TCGA-TGCT }
+\item{ TCGA-THCA }
+\item{ TCGA-THYM }
+\item{ TCGA-UCEC }
+\item{ TCGA-UCS }
+\item{ TCGA-UVM }
+}}
 }
 \value{
-expression set and clinical info
+a SummarizedExperiment object, six expression matrix and the
+corresponding clinical information. The data are saved in the directory
+of "output_mRNA_lncRNA_expr".
 }
 \description{
-Get GDC TCGA mRNA and lncRNA expression set and clinical info
+This function provides a powerful workflow to query, download
+and prepare the newest TCGA gene expression quantification data and the
+clinical information. All you have to supply is a valid TCGA project
+name. It can automatically save six types of expression matrix(mRNA
+counts/tpm/fpkm, lncRNA counts/tpm/fpkm) and the corresponding clinical
+information, both in rdata and csv types.
 }

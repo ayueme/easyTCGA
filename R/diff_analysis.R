@@ -1,10 +1,12 @@
 #' Differential analysis
 #'
-#' @param exprset expression set prepared by getmrnaexpr()
+#' @description This function can automatically do differential analysis by 3
+#'     ways: DESeq2, egdeR and limma.
+#' @param exprset counts expression matrix prepared by getmrnaexpr()
 #' @param project a TCGA project
 #' @param save save results to local, defautl is "FALSE"
 #'
-#' @return the differential analysis results
+#' @return a list of differential analysis results
 #' @export
 
 diff_analysis <- function(exprset, project, save = FALSE){

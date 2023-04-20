@@ -14,21 +14,26 @@ batch_survival(
 )
 }
 \arguments{
-\item{exprset}{expression set prepared by getmrnaexpr()}
+\item{exprset}{expression matrix prepared by getmrnaexpr()}
 
 \item{clin}{clinical information prepared by getmrnaexpr()}
 
-\item{expr_type}{type of expression set}
+\item{expr_type}{type of expression matrix, one of counts, tpm, fpkm. If
+"counts", the expression matrix will be transformed by DESeq2::vst(), if
+"tpm" or "fpkm", it will be transformed by log2(x + 0.1)}
 
 \item{project}{a TCGA project}
 
-\item{min_sample_size}{min sample size}
+\item{min_sample_size}{min sample size of each group for survival analysis,
+default is 5}
 
 \item{print_index}{print index, default is "TRUE"}
 }
 \value{
-survival analysis resaults
+a list of survival analysis results, both logrank and cox regression
 }
 \description{
-Batch survival analysis
+This function can automatically do the univariate cox regression
+and log-rank test according to the median of gene expression(no other
+choice for current version).
 }

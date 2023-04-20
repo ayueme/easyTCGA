@@ -2,16 +2,56 @@
 % Please edit documentation in R/getmirnaexpr.R
 \name{getmirnaexpr}
 \alias{getmirnaexpr}
-\title{Get GDC TCGA miRNA expression set}
+\title{Get GDC TCGA miRNA expression matrix}
 \usage{
 getmirnaexpr(project)
 }
 \arguments{
-\item{project}{a TCGA project}
+\item{project}{one of 33 TCGA projects
+\itemize{
+\item{ TCGA-ACC }
+\item{ TCGA-BLCA }
+\item{ TCGA-BRCA }
+\item{ TCGA-CESC }
+\item{ TCGA-CHOL }
+\item{ TCGA-COAD }
+\item{ TCGA-DLBC }
+\item{ TCGA-ESCA }
+\item{ TCGA-GBM }
+\item{ TCGA-HNSC }
+\item{ TCGA-KICH }
+\item{ TCGA-KIRC }
+\item{ TCGA-KIRP }
+\item{ TCGA-LAML }
+\item{ TCGA-LGG }
+\item{ TCGA-LIHC }
+\item{ TCGA-LUAD }
+\item{ TCGA-LUSC }
+\item{ TCGA-MESO }
+\item{ TCGA-OV }
+\item{ TCGA-PAAD }
+\item{ TCGA-PCPG }
+\item{ TCGA-PRAD }
+\item{ TCGA-READ }
+\item{ TCGA-SARC }
+\item{ TCGA-SKCM }
+\item{ TCGA-STAD }
+\item{ TCGA-TGCT }
+\item{ TCGA-THCA }
+\item{ TCGA-THYM }
+\item{ TCGA-UCEC }
+\item{ TCGA-UCS }
+\item{ TCGA-UVM }
+}}
 }
 \value{
-expression set
+miRNA expression matrix. The data are saved in the directory of
+"output_miRNA_expr".
 }
 \description{
-Get GDC TCGA miRNA expression set
+This function provides a powerful workflow to query, download
+and prepare the newest TCGA miRNA expression quantification data. All you
+have to supply is a valid TCGA project name. It will automatically save
+two types of expression matrix(counts and rpm), both in rdata and csv
+types.
 }

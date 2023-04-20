@@ -7,15 +7,16 @@
 diff_analysis(exprset, project, save = FALSE)
 }
 \arguments{
-\item{exprset}{expression set prepared by getmrnaexpr()}
+\item{exprset}{counts expression matrix prepared by getmrnaexpr()}
 
 \item{project}{a TCGA project}
 
 \item{save}{save results to local, defautl is "FALSE"}
 }
 \value{
-the differential analysis results
+a list of differential analysis results
 }
 \description{
-Differential analysis
+This function can automatically do differential analysis by 3
+ways: DESeq2, egdeR and limma.
 }
