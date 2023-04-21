@@ -75,9 +75,10 @@ getmrnaexpr <- function(project) {
 
   clin_info <- as.data.frame(SummarizedExperiment::colData(se))
   save(clin_info, file = paste0("output_mRNA_lncRNA_expr/", project, "_clinical.rdata"))
-  utils::write.csv(clin_info,
-            paste0("output_mRNA_lncRNA_expr/", project, "_clinical.csv"),
-            quote = F,row.names = F)
+  # list cannot be saved to csv
+  #utils::write.csv(clin_info,
+  #          paste0("output_mRNA_lncRNA_expr/", project, "_clinical.csv"),
+  #          quote = F,row.names = F)
 
   rowdata <- SummarizedExperiment::rowData(se)
   se_mrna <- se[rowdata$gene_type == "protein_coding", ]
