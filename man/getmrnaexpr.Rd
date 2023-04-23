@@ -55,5 +55,5 @@ and prepare the newest TCGA gene expression quantification data and the
 clinical information. All you have to supply is a valid TCGA project
 name. It can automatically save six types of expression matrix(mRNA
 counts/tpm/fpkm, lncRNA counts/tpm/fpkm) and the corresponding clinical
-information, both in rdata and csv types.
+information, both in rdata and csv formats.
 }

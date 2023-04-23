@@ -46,11 +46,11 @@ getsnvmaf(project)
 }
 \value{
 maf file and clinical information, which can be directly used by
-maftools::read_maf(). The data are saved in the directory of "output_snv"
+maftools::read.maf(). The data are saved in the directory of "output_snv"
 }
 \description{
 This function can automatically download and prepare the TCGA
-maf files(masked annotated somatic mutation) with the corresponding
-clinical information. The output can be directly used by
-maftools::read_maf() function.
+maf files(masked somatic mutation) with the corresponding clinical
+information. The output can be directly used by maftools::read.maf()
+function.
 }

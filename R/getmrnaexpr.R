@@ -5,7 +5,7 @@
 #'     clinical information. All you have to supply is a valid TCGA project
 #'     name. It can automatically save six types of expression matrix(mRNA
 #'     counts/tpm/fpkm, lncRNA counts/tpm/fpkm) and the corresponding clinical
-#'     information, both in rdata and csv types.
+#'     information, both in rdata and csv formats.
 #' @param project one of 33 TCGA projects
 #' \itemize{
 #' \item{ TCGA-ACC }
@@ -52,7 +52,7 @@ getmrnaexpr <- function(project) {
   if (!file.exists("output_mRNA_lncRNA_expr")) {
     dir.create("output_mRNA_lncRNA_expr")
   }
-  print("Querying begins. Make sure your network has access to GDC TCGA!")
+  cat("Querying begins. Make sure your network has access to GDC TCGA! \n")
 
   query <- TCGAbiolinks::GDCquery(
     project = project,
@@ -61,7 +61,7 @@ getmrnaexpr <- function(project) {
     workflow.type = "STAR - Counts"
   )
 
-  print("Downloading begins. Make sure your network has access to GDC TCGA!")
+  cat("Downloading begins. Make sure your network has access to GDC TCGA! \n")
 
   TCGAbiolinks::GDCdownload(query, files.per.chunk = 100)
 

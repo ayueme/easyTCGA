@@ -53,5 +53,5 @@ This function provides a powerful workflow to query, download
 and prepare the newest TCGA miRNA expression quantification data. All you
 have to supply is a valid TCGA project name. It will automatically save
 two types of expression matrix(counts and rpm), both in rdata and csv
-types.
+formats.
 }

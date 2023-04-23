@@ -4,7 +4,7 @@
 #'     and prepare the newest TCGA miRNA expression quantification data. All you
 #'     have to supply is a valid TCGA project name. It will automatically save
 #'     two types of expression matrix(counts and rpm), both in rdata and csv
-#'     types.
+#'     formats.
 #' @param project one of 33 TCGA projects
 #' \itemize{
 #' \item{ TCGA-ACC }
@@ -57,7 +57,6 @@ getmirnaexpr <- function(project) {
   )
 
   TCGAbiolinks::GDCdownload(query)
-
   TCGAbiolinks::GDCprepare(query, save = T,
                            save.filename = paste0("output_miRNA_expr/", project, "_miRNA.rdata"))
 
@@ -65,14 +64,18 @@ getmirnaexpr <- function(project) {
 
   mirna_expr_counts <- data[, c(1, seq(2, ncol(data), 3))]
   colnames(mirna_expr_counts)[-1] <- substr(colnames(mirna_expr_counts)[-1], 12, 39)
+  rownames(mirna_expr_counts) <- mirna_expr_counts[,1]
+  mirna_expr_counts <- mirna_expr_counts[,-1]
   save(mirna_expr_counts, file = paste0("output_miRNA_expr/", project, "_mirna_expr_counts.rdata"))
   utils::write.csv(mirna_expr_counts,
-            paste0("output_miRNA_expr/", project, "_mirna_expr_counts.csv"),
-            quote = F,row.names = F)
+                   paste0("output_miRNA_expr/", project, "_mirna_expr_counts.csv"),
+                   quote = F,row.names = T)
   mirna_expr_rpm <- data[, c(1, seq(3, ncol(data), 3))]
   colnames(mirna_expr_rpm)[-1] <- substr(colnames(mirna_expr_rpm)[-1], 32, 59)
+  rownames(mirna_expr_rpm) <- mirna_expr_rpm[,1]
+  mirna_expr_rpm <- mirna_expr_rpm[,-1]
   save(mirna_expr_rpm, file = paste0("output_miRNA_expr/", project, "_mirna_expr_rpm.rdata"))
   utils::write.csv(mirna_expr_rpm,
-            paste0("output_miRNA_expr/", project, "_mirna_expr_rpm.csv"),
-            quote = F,row.names = F)
+                   paste0("output_miRNA_expr/", project, "_mirna_expr_rpm.csv"),
+                   quote = F,row.names = T)
 }

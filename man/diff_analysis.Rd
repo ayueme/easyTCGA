@@ -4,17 +4,23 @@
 \alias{diff_analysis}
 \title{Differential analysis}
 \usage{
-diff_analysis(exprset, project, save = FALSE)
+diff_analysis(exprset, project, group = NULL, save = FALSE)
 }
 \arguments{
-\item{exprset}{counts expression matrix prepared by getmrnaexpr()}
+\item{exprset}{counts expression matrix prepared by getmrnaexpr() or
+getmirnaexpr(), or your own counts expression matrix. If use your own
+expression matrix, the argument "group" must be provided}
 
-\item{project}{a TCGA project}
+\item{project}{a character used as the part of file name}
 
-\item{save}{save results to local, defautl is "FALSE"}
+\item{group}{a factor with two levels, specifying the group of samples,
+which should be the same length as your sample size. If use your own
+expression matrix, it must be provided}
+
+\item{save}{save results to local, default is "FALSE"}
 }
 \value{
-a list of differential analysis results
+a list of differential analysis results from DESeq2, limma, edgeR
 }
 \description{
 This function can automatically do differential analysis by 3

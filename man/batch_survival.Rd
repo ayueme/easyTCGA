@@ -22,7 +22,7 @@ batch_survival(
 "counts", the expression matrix will be transformed by DESeq2::vst(), if
 "tpm" or "fpkm", it will be transformed by log2(x + 0.1)}
 
-\item{project}{a TCGA project}
+\item{project}{a character used as the part of file name}
 
 \item{min_sample_size}{min sample size of each group for survival analysis,
 default is 5}
@@ -30,10 +30,11 @@ default is 5}
 \item{print_index}{print index, default is "TRUE"}
 }
 \value{
-a list of survival analysis results, both logrank and cox regression
+a list of survival analysis results, both log-rank and cox regression
 }
 \description{
 This function can automatically do the univariate cox regression
 and log-rank test according to the median of gene expression(no other
-choice for current version).
+choice for current version). Attention: only do survival analysis on tumor
+samples
 }
