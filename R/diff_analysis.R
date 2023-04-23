@@ -19,7 +19,7 @@ diff_analysis <- function(exprset,
                           group = NULL,
                           save = FALSE
                           ){
-  if(is.null(group)){
+  if(!is.null(group)){
     metadata <- data.frame(sample_id = colnames(exprset),
                            group = group
                            )
