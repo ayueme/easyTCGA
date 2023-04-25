@@ -32,6 +32,7 @@ diff_analysis <- function(exprset,
   }
   res_diff <- list()
   ## deseq2
+  cli::cli_alert_info("Running DESeq2")
   dds1 <- DESeq2::DESeqDataSetFromMatrix(countData = exprset,
                                          colData = metadata,
                                          design = ~ group
@@ -43,6 +44,7 @@ diff_analysis <- function(exprset,
   res_diff[[1]] <- deg_deseq2
   names(res_diff)[[1]] <- "deg_deseq2"
   ## limma voom
+  cli::cli_alert_info("Running limma voom")
   y <- edgeR::DGEList(counts = exprset, group = group)
   keep <- edgeR::filterByExpr(y, group = group)
   y <- y[keep,keep.lib.sizes=FALSE]
@@ -59,6 +61,7 @@ diff_analysis <- function(exprset,
   res_diff[[2]] <- deg_limma
   names(res_diff)[[2]] <- "deg_limma"
   ## edger
+  cli::cli_alert_info("Running edgeR")
   y <- edgeR::estimateDisp(y,design)
   fit <- edgeR::glmQLFit(y,design)
   qlf <- edgeR::glmQLFTest(fit,coef=2)
@@ -69,10 +72,11 @@ diff_analysis <- function(exprset,
   names(res_diff)[[3]] <- "deg_edger"
 
   if(save){
-    if (!file.exists("output_diff")) {
+    if (!dir.exists("output_diff")) {
       dir.create("output_diff")
     }
     save(res_diff, file = paste0("output_diff/",project,"_deg_results.rdata"))
   }
+  cli::cli_alert_success("Analysis done.")
   return(res_diff)
 }

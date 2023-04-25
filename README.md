@@ -42,13 +42,13 @@ devtools::install_github("ayueme/easyTCGA")
   - 只需要提供正确的`TCGA project`名字即可；
   - 自动下载并整理`mRNA`和`lncRNA`的`counts，tpm，fpkm`共6种表达矩阵，以及对应的临床信息，临床信息样本顺序和表达矩阵样本顺序完全一致，无需再次整理；
   - 自动保存以上6种表达矩阵和临床信息到当前工作目录下的`output_mRNA_lncRNA_expr`文件夹下，并且同时保存`rdata`和`csv`两种文件格式；
-  - 下载的数据为最新数据，和`GDC TCGA`官网(https://portal.gdc.cancer.gov/)保持一致；
+  - 下载的数据为最新数据，和`GDC TCGA`[官网](https://portal.gdc.cancer.gov/)保持一致；
   - 支持通过手动下载的TCGA数据进行自动整理并完成以上过程
 - `getmirnaexpr`
   - 只需要提供正确的`TCGA project`名字即可；
   - 自动下载并整理`miRNA`的`counts，rpm`2种表达矩阵；
-  - 自动保存以上2种表达矩阵到当前工作目录下的`output_miRNA_expr`文件夹下，并且同时保存`rdata`和`csv`两种文件格式；
-  - 下载的数据为最新数据，和`GDC TCGA`官网(https://portal.gdc.cancer.gov/)保持一致
+  - 自动保存以上2种表达矩阵和对应的临床信息到当前工作目录下的`output_miRNA_expr`文件夹下，并且同时保存`rdata`和`csv`两种文件格式；
+  - 下载的数据为最新数据，和`GDC TCGA`[官网](https://portal.gdc.cancer.gov/)保持一致
 - `getsnvmaf`
   - 只需要提供正确的`TCGA project`名字即可；
   - 自动下载并整理`TCGA MAF`文件(masked somatic mutation)以及对应的临床信息，并自动保存到当前工作目录下的`output_snv`文件夹下；
@@ -86,12 +86,12 @@ B站，公众号，Github，粉丝QQ群，都可以。
 - [ ] 支持TARGET数据下载和整理
 - [ ] 支持XENA数据下载和整理
 - [x] 增加对`miRNA`的差异分析支持
-- [ ] 增加对`miRNA`的批量生存分析支持
-- [x] 增加对自定义表达矩阵差异分析的支持
+- [x] 增加对`miRNA`的批量生存分析支持
+- [x] 增加对自定义表达矩阵/自定义分组差异分析的支持
 - [ ] 增加对多分组差异分析的支持
 - [x] 增加对`lncRNA`的差异分析和批量生存分析支持
 - [ ] 增加批量生存分析支持自定义分组标准
 - [x] 1行代码实现多种免疫浸润分析，准备写一个专门的R包
-- [ ] 提示信息修改
+- [x] 提示信息修改
 - [ ] ......
 

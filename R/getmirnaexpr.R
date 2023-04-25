@@ -47,7 +47,7 @@
 #' @export
 
 getmirnaexpr <- function(project) {
-  if (!file.exists("output_miRNA_expr")) {
+  if (!dir.exists("output_miRNA_expr")) {
     dir.create("output_miRNA_expr")
   }
 

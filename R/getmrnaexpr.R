@@ -49,7 +49,7 @@
 #' @export
 
 getmrnaexpr <- function(project) {
-  if (!file.exists("output_mRNA_lncRNA_expr")) {
+  if (!dir.exists("output_mRNA_lncRNA_expr")) {
     dir.create("output_mRNA_lncRNA_expr")
   }
   cat("Querying begins. Make sure your network has access to GDC TCGA! \n")

@@ -46,7 +46,7 @@
 #' @export
 
 getsnvmaf <- function(project){
-  if (!file.exists("output_snv")) {
+  if (!dir.exists("output_snv")) {
     dir.create("output_snv")
   }
   query <- TCGAbiolinks::GDCquery(

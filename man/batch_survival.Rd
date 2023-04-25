@@ -14,13 +14,14 @@ batch_survival(
 )
 }
 \arguments{
-\item{exprset}{expression matrix prepared by getmrnaexpr()}
+\item{exprset}{expression matrix prepared by getmrnaexpr() or getmirnaexpr()}
 
-\item{clin}{clinical information prepared by getmrnaexpr()}
+\item{clin}{clinical information prepared by getmrnaexpr() or getmirnaexpr()}
 
 \item{expr_type}{type of expression matrix, one of counts, tpm, fpkm. If
-"counts", the expression matrix will be transformed by DESeq2::vst(), if
-"tpm" or "fpkm", it will be transformed by log2(x + 0.1)}
+"counts", the expression matrix will be transformed by DESeq2::vst() or
+DESeq2::varianceStabilizingTransformation, if "tpm" or "fpkm", it will be
+transformed by log2(x + 0.1)}
 
 \item{project}{a character used as the part of file name}
 

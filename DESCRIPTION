@@ -1,6 +1,6 @@
 Package: easyTCGA
 Title: Make TCGA analysis easy
-Version: 0.0.1.0000
+Version: 0.0.1.1000
 Authors@R: 
     person(given = "Yue", family = "Li", , "1272246204@qq.com", role = c("aut", "cre"))
 Description: This packages provides several powerful functions to speed up the
@@ -11,11 +11,15 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
     broom,
+    cli,
     DESeq2,
     edgeR,
     limma,
+    S4Vectors,
     stats,
     SummarizedExperiment,
     survival,
     TCGAbiolinks,
     utils
+Depends: 
+    R (>= 2.10)
