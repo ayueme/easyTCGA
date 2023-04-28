@@ -6,7 +6,7 @@
 #'     name. It can automatically save six types of expression matrix(mRNA
 #'     counts/tpm/fpkm, lncRNA counts/tpm/fpkm) and the corresponding clinical
 #'     information, both in rdata and csv formats.
-#' @param project one of 33 TCGA projects
+#' @param project valid TCGA project name(s) from 33 TCGA projects
 #' \itemize{
 #' \item{ TCGA-ACC }
 #' \item{ TCGA-BLCA }
@@ -75,10 +75,11 @@ getmrnaexpr <- function(project) {
 
   clin_info <- as.data.frame(SummarizedExperiment::colData(se))
   save(clin_info, file = paste0("output_mRNA_lncRNA_expr/", project, "_clinical.rdata"))
-  # list cannot be saved to csv
-  #utils::write.csv(clin_info,
-  #          paste0("output_mRNA_lncRNA_expr/", project, "_clinical.csv"),
-  #          quote = F,row.names = F)
+  clin_info <- apply(clin_info,2,as.character)
+  utils::write.csv(clin_info,
+            paste0("output_mRNA_lncRNA_expr/", project, "_clinical.csv"),
+            row.names = F
+            )
 
   rowdata <- SummarizedExperiment::rowData(se)
   se_mrna <- se[rowdata$gene_type == "protein_coding", ]
@@ -91,7 +92,6 @@ getmrnaexpr <- function(project) {
   expr_fpkm_lnc <- SummarizedExperiment::assay(se_lnc, "fpkm_unstrand")
   symbol_mrna <- SummarizedExperiment::rowData(se_mrna)$gene_name
   symbol_lnc <- SummarizedExperiment::rowData(se_lnc)$gene_name
-
 
   mrna_expr_counts <- cbind(data.frame(symbol_mrna), as.data.frame(expr_counts_mrna))
   rowm <- as.data.frame(rowMeans(mrna_expr_counts[, -1]))
@@ -134,7 +134,6 @@ getmrnaexpr <- function(project) {
   utils::write.csv(mrna_expr_fpkm,
             paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_fpkm.csv"),
             quote = F)
-
 
   lncrna_expr_counts <- cbind(data.frame(symbol_lnc), as.data.frame(expr_counts_lnc))
   rowm <- as.data.frame(rowMeans(lncrna_expr_counts[, -1]))

@@ -7,7 +7,7 @@
 getmrnaexpr(project)
 }
 \arguments{
-\item{project}{one of 33 TCGA projects
+\item{project}{valid TCGA project name(s) from 33 TCGA projects
 \itemize{
 \item{ TCGA-ACC }
 \item{ TCGA-BLCA }

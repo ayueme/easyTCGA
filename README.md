@@ -25,7 +25,8 @@ if(!require("limma")) BiocManager::install("limma")
 # 安装cran上面的R包
 if(!require("survival")) install.packages("survival")
 if(!require("broom")) install.packages("broom")
-ifif(!require("devtools")) install.packages("devtools")
+if(!require("devtools")) install.packages("devtools")
+if(!require("cli")) install.packages("cli")
 ```
 
 再安装`easyTCGA`包：
@@ -80,8 +81,8 @@ B站，公众号，Github，粉丝QQ群，都可以。
 
 ## TO DO
 
-- [ ] 增加对甲基化表达矩阵的支持
-- [ ] 增加对拷贝数变异数据的支持
+- [x] 增加对甲基化表达矩阵的支持，`TCGAbiolinks`对甲基化数据的下载和整理足够简单了，暂不考虑了
+- [x] 增加对拷贝数变异数据的支持，`TCGAbiolinks`对CNV数据的下载和整理足够简单了，暂不考虑了
 - [ ] 支持GTEx数据下载和整理
 - [ ] 支持TARGET数据下载和整理
 - [ ] 支持XENA数据下载和整理

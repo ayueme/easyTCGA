@@ -14,6 +14,7 @@ getmrnaexpr_xena <- function(file_name){
   }
 
   exprset <- utils::read.table(file_name,sep = "\t",header = T,check.names = F)
+  # gtf v22, keep the same as XENA
   # mRNA
   gencodev22_mrna <- subset(genecodev22,
                             type=="gene"&gene_type=="protein_coding",
