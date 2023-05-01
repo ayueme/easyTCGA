@@ -4,7 +4,7 @@
 #'     and prepare the newest TCGA miRNA expression quantification data. All you
 #'     have to supply is a valid TCGA project name. It will automatically save
 #'     two types of expression matrix(counts and rpm), both in rdata and csv
-#'     formats.
+#'     formats, and the corresponding clinical information.
 #' @param project one of 33 TCGA projects
 #' \itemize{
 #' \item{ TCGA-ACC }
@@ -42,8 +42,8 @@
 #' \item{ TCGA-UVM }
 #' }
 #'
-#' @return miRNA expression matrix. The data are saved in the directory of
-#'     "output_miRNA_expr".
+#' @return miRNA expression matrix and clinical information. The data are saved
+#'     in the directory of "output_miRNA_expr".
 #' @export
 
 getmirnaexpr <- function(project) {
@@ -78,4 +78,14 @@ getmirnaexpr <- function(project) {
   utils::write.csv(mirna_expr_rpm,
                    paste0("output_miRNA_expr/", project, "_mirna_expr_rpm.csv"),
                    quote = F,row.names = T)
+
+  clin <- TCGAbiolinks::GDCquery_clinic(project = project, type = "clinical")
+  save(clin,file = paste0("output_miRNA_expr/",project,"_clin.rdata"))
+
+  clin_mirna <- clin[match(substr(colnames(mirna_expr_counts),1,12),clin$submitter_id),]
+  save(clin_mirna, file = paste0("output_miRNA_expr/",project,"_clin_mirna.rdata"))
+  utils::write.csv(clin_mirna,paste0("output_miRNA_expr/",project,"_clin_mirna.csv"),
+                   quote = F,row.names = F)
+
 }
+

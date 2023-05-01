@@ -45,13 +45,13 @@ getmirnaexpr(project)
 }}
 }
 \value{
-miRNA expression matrix. The data are saved in the directory of
-"output_miRNA_expr".
+miRNA expression matrix and clinical information. The data are saved
+in the directory of "output_miRNA_expr".
 }
 \description{
 This function provides a powerful workflow to query, download
 and prepare the newest TCGA miRNA expression quantification data. All you
 have to supply is a valid TCGA project name. It will automatically save
 two types of expression matrix(counts and rpm), both in rdata and csv
-formats.
+formats, and the corresponding clinical information.
 }
