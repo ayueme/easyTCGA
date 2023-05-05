@@ -45,6 +45,12 @@ devtools::install_github("ayueme/easyTCGA")
   - 自动保存以上6种表达矩阵和临床信息到当前工作目录下的`output_mRNA_lncRNA_expr`文件夹下，并且同时保存`rdata`和`csv`两种文件格式；
   - 下载的数据为最新数据，和`GDC TCGA`[官网](https://portal.gdc.cancer.gov/)保持一致；
   - 支持通过手动下载的TCGA数据进行自动整理并完成以上过程
+- `getmrnaexpr_xena`
+  - 用于`XENA`网站下载的基因表达数据和临床信息的整理（`gdchub`）
+  - 直接提供文件名即可，比如：`TCGA-ACC.htseq_counts.tsv.gz`，`TCGA-ACC.GDC_phenotype.tsv.gz`
+  - 自动保存`mRNA`、`lncRNA`表达矩阵和临床信息到当前工作目录下的`output_mRNA_expr_xena`文件夹下
+  - （单独使用和GDC官方数据没有任何优势）
+
 - `getmirnaexpr`
   - 只需要提供正确的`TCGA project`名字即可；
   - 自动下载并整理`miRNA`的`counts，rpm`2种表达矩阵；
@@ -60,7 +66,7 @@ devtools::install_github("ayueme/easyTCGA")
   - 自动通过3个R包进行差异分析：`DESeq2, edgeR, limma`；
   - 输出结果默认为1个`list`，内含3种差异分析结果，支持保存`rdata`格式数据到本地
 - `batch_survival`
-  - 自动对大约20000个基因进行`logrank`检验和单因素`cox`分析，基于中位数；
+  - 自动对大约20000个基因进行`logrank`检验和单因素`cox`分析，默认基于**最佳截点（P值最小）**；
   - 与`getmrnaexpr`函数无缝对接，直接使用其输出结果即可，无需任何整理；
   - 支持`counts，tpm，fpkm`3种格式的数据，如果是`counts`，则通过`DESeq2::vst()`进行转换，如果是`tpm/fpkm`，则进行`log2(x + 0.1)`转换；
   - 支持打印基因序号到屏幕，方便定位有问题的基因
@@ -81,18 +87,12 @@ B站，公众号，Github，粉丝QQ群，都可以。
 
 ## TO DO
 
-- [x] 增加对甲基化表达矩阵的支持，`TCGAbiolinks`对甲基化数据的下载和整理足够简单了，暂不考虑了
-- [x] 增加对拷贝数变异数据的支持，`TCGAbiolinks`对CNV数据的下载和整理足够简单了，暂不考虑了
-- [ ] 支持GTEx数据下载和整理
-- [ ] 支持TARGET数据下载和整理
-- [ ] 支持XENA数据下载和整理
+- [x] 支持`XENA`网站下载的`gene expression`和临床数据的整理
+- [ ] 支持`XENA`泛癌数据的整理
 - [x] 增加对`miRNA`的差异分析支持
 - [x] 增加对`miRNA`的批量生存分析支持
 - [x] 增加对自定义表达矩阵/自定义分组差异分析的支持
 - [ ] 增加对多分组差异分析的支持
 - [x] 增加对`lncRNA`的差异分析和批量生存分析支持
-- [ ] 增加批量生存分析支持自定义分组标准
-- [x] 1行代码实现多种免疫浸润分析，准备写一个专门的R包
-- [x] 提示信息修改
 - [ ] ......
 

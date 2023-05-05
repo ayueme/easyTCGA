@@ -4,15 +4,16 @@
 \alias{getmrnaexpr_xena}
 \title{Get mRNA and lncRNA expression matrix from XENA file}
 \usage{
-getmrnaexpr_xena(file_name)
+getmrnaexpr_xena(expr_file, clin_file = NULL)
 }
 \arguments{
-\item{file_name}{gene expression RNAseq(HTSeq-Counts) file downloaded from
-https://gdc.xenahubs.net}
+\item{expr_file}{gene expression RNAseq file downloaded from XENA(gdchub)}
+
+\item{clin_file}{phenotype file downloaded from XENA(gdchub)}
 }
 \value{
-mRNA and lncRNA expression matrix. The data are saved in the
-directory of "output_mRNA_expr_xena".
+mRNA, lncRNA expression matrix and clinical info. The data are saved
+under the directory of "output_mRNA_expr_xena".
 }
 \description{
 Get mRNA and lncRNA expression matrix from XENA file

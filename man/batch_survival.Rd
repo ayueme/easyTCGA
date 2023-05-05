@@ -8,34 +8,39 @@ batch_survival(
   exprset,
   clin,
   expr_type = c("counts", "tpm", "fpkm"),
+  optimal_cut = TRUE,
   project,
   min_sample_size = 5,
   print_index = TRUE
 )
 }
 \arguments{
-\item{exprset}{expression matrix prepared by getmrnaexpr() or getmirnaexpr()}
+\item{exprset}{Expression matrix from getmrnaexpr() or getmirnaexpr().}
 
-\item{clin}{clinical information prepared by getmrnaexpr() or getmirnaexpr()}
+\item{clin}{Clinical information from getmrnaexpr() or getmirnaexpr().}
 
-\item{expr_type}{type of expression matrix, one of counts, tpm, fpkm. If
-"counts", the expression matrix will be transformed by DESeq2::vst() or
-DESeq2::varianceStabilizingTransformation, if "tpm" or "fpkm", it will be
-transformed by log2(x + 0.1)}
+\item{expr_type}{Type of expression matrix, one of count, tpm, fpkm.
+If "count", the expression matrix will be transformed by DESeq2::vst() or
+DESeq2::varianceStabilizingTransformation. For other types, the expression
+will be transformed by log2(x + 0.1).}
 
-\item{project}{a character used as the part of file name}
+\item{optimal_cut}{Use "optimal" cutpoint to do survival analysis. If FALSE,
+median of gene expression will be used. Optimal cutpoint is calculated by
+survminer::surv_cutpoint().}
 
-\item{min_sample_size}{min sample size of each group for survival analysis,
-default is 5}
+\item{project}{Characters used as the part of file name when saving results.}
 
-\item{print_index}{print index, default is "TRUE"}
+\item{min_sample_size}{Min sample size of each group for survival analysis,
+default is 5.}
+
+\item{print_index}{Print index, default is TRUE.}
 }
 \value{
 a list of survival analysis results, both log-rank and cox regression
 }
 \description{
-This function can automatically do the univariate cox regression
-and log-rank test according to the median of gene expression(no other
-choice for current version). Attention: only do survival analysis on tumor
-samples
+This function can automatically do log-rank test and univariate
+cox regression according to the "optimal" cutpoint or median of gene
+expression. Support mRNA, lncRNA and miRNA expression matrix(count, tpm,
+fpkm are all supported).
 }

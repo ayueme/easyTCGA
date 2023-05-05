@@ -18,17 +18,17 @@ diff_analysis <- function(exprset,
                           project,
                           group = NULL,
                           save = FALSE
-                          ){
+){
   if(!is.null(group)){
     metadata <- data.frame(sample_id = colnames(exprset),
                            group = group
-                           )
+    )
   } else {
     group <- ifelse(substr(colnames(exprset),14,15)<10,"tumor","normal")
     group <- factor(group, levels = c("normal","tumor"))
     metadata <- data.frame(sample_id = colnames(exprset),
                            group = group
-                           )
+    )
   }
   res_diff <- list()
   ## deseq2
@@ -36,7 +36,7 @@ diff_analysis <- function(exprset,
   dds1 <- DESeq2::DESeqDataSetFromMatrix(countData = exprset,
                                          colData = metadata,
                                          design = ~ group
-                                         )
+  )
   dds <- DESeq2::DESeq(dds1)
   res <- DESeq2::results(dds, tidy = T)
   names(res)[1] <- "genesymbol"
@@ -80,3 +80,4 @@ diff_analysis <- function(exprset,
   cli::cli_alert_success("Analysis done.")
   return(res_diff)
 }
+

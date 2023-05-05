@@ -20,6 +20,8 @@ Imports:
     cli,
     stats,
     survival,
-    utils
+    utils,
+    survminer,
+    data.table
 Depends: 
     R (>= 2.10)
