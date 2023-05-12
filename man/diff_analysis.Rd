@@ -4,14 +4,18 @@
 \alias{diff_analysis}
 \title{Differential analysis}
 \usage{
-diff_analysis(exprset, project, group = NULL, save = FALSE)
+diff_analysis(exprset, project, is_count = TRUE, group = NULL, save = FALSE)
 }
 \arguments{
-\item{exprset}{counts expression matrix prepared by getmrnaexpr() or
-getmirnaexpr(), or your own counts expression matrix. If use your own
+\item{exprset}{expression matrix prepared by getmrnaexpr()/getmirnaexpr()/
+getmrnaexpr_xena(), or your own expression matrix. If use your own
 expression matrix, the argument "group" must be provided}
 
-\item{project}{a character used as the part of file name}
+\item{project}{characters used as part of file name}
+
+\item{is_count}{the expression matrix is count or not. Default is TRUE. If
+TRUE, the DEA will be done by DESeq2, egdeR and limma; if FALSE, the DEA
+will be done by limma and wilcoxon test}
 
 \item{group}{a factor with two levels, specifying the group of samples,
 which should be the same length as your sample size. If use your own
@@ -20,9 +24,9 @@ expression matrix, it must be provided}
 \item{save}{save results to local, default is "FALSE"}
 }
 \value{
-a list of differential analysis results from DESeq2, limma, edgeR
+a list of differential analysis results
 }
 \description{
-This function can automatically do differential analysis by 3
-ways: DESeq2, egdeR and limma.
+This function can automatically do differential analysis by 4
+methods: DESeq2, egdeR, limma and wilcoxon test.
 }
