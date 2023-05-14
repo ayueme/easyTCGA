@@ -39,7 +39,7 @@ devtools::install_github("ayueme/easyTCGA")
 
 ## 主要功能
 
-> 1行代码实现1个常见分析！
+> 解决TCGA数据下载和整理问题，顺便实现差异分析和批量生存分析
 
 - `getmrnaexpr`
   - 只需要提供正确的`TCGA project`名字即可；
@@ -47,7 +47,7 @@ devtools::install_github("ayueme/easyTCGA")
   - 自动保存以上6种表达矩阵和临床信息到当前工作目录下的`output_mRNA_lncRNA_expr`文件夹下，并且同时保存`rdata`和`csv`两种文件格式；
   - 下载的数据为最新数据，和`GDC TCGA`[官网](https://portal.gdc.cancer.gov/)保持一致；
   - 支持通过手动下载的TCGA数据进行自动整理并完成以上过程（可参考b站教程：[easyTCGA：1行代码整理TCGA的6种表达矩阵和临床信息](https://www.bilibili.com/video/BV15c411J7bJ/?share_source=copy_web&vd_source=abc21f68a9e2a784892483fd768dbafa)）
-  - lncRNA鉴别参考：[Ensembl官网]([Biotypes (ensembl.org)](http://useast.ensembl.org/info/genome/genebuild/biotypes.html))
+  - lncRNA鉴别参考：[Biotypes (ensembl.org)](http://useast.ensembl.org/info/genome/genebuild/biotypes.html)
 - `getmrnaexpr_xena`
   - 用于`XENA`网站下载的TCGA基因表达数据和临床信息的整理（仅限`gdchub`）；
   - 直接提供文件名即可，比如：`TCGA-ACC.htseq_counts.tsv.gz, TCGA-ACC.htseq_fpkm.tsv.gz`，`TCGA-ACC.GDC_phenotype.tsv.gz, TCGA-ACC.survival.tsv`；
@@ -63,6 +63,18 @@ devtools::install_github("ayueme/easyTCGA")
   - 只需要提供正确的`TCGA project`名字即可；
   - 自动下载并整理`TCGA MAF`文件(masked somatic mutation)以及对应的临床信息，并自动保存到当前工作目录下的`output_snv`文件夹下；
   - 输出结果可以直接通过`maftools::read_maf()`函数读取，无需再次整理
+- `getcnv`
+  - 只需要提供正确的`TCGA project`名字即可；
+  - 自动下载并整理`copy number variation`数据；数据保存到当前工作目录下的`output_cnv`文件夹下；
+  - 下载的数据为最新数据，和`GDC TCGA`[官网](https://portal.gdc.cancer.gov/)保持一致
+
+- `getmethybeta`
+  - 只需要提供正确的`TCGA project`名字即可；
+  - 自动下载并整理`450K`的`DNA methylation`的`beta值矩阵`，以及对应的临床信息，数量和顺序完全一致，无需再次整理；
+  - 自动整理探针信息，比如探针对应的`gene symbol`等，基于`GRCh 38`；
+  - 数据保存在当前工作目录下的`output_methy`文件夹下；
+  - 下载的数据为最新数据，和`GDC TCGA`[官网](https://portal.gdc.cancer.gov/)保持一致
+
 - `diff_analysis`
   - 与`getmrnaexpr`，`getmirnaexpr`，`getmrnaexpr_xena`函数无缝对接，直接使用其输出结果即可，无需任何整理（默认对tumor和normal组进行差异分析）；
   - 支持`count, tpm, fpkm`和`GEO`数据，如果是`count`则自动通过3个R包进行差异分析：`DESeq2, edgeR, limma`；如果是其他类型（`tpm, fpkm`和`基因表达芯片数据`）会自动判断是否需要`log2(x + 0.1)`转换，然后使用`limma`和`wilcoxon test`做差异分析；

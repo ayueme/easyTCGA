@@ -1,4 +1,4 @@
-#' Get TCGA mRNA/lncRNA expression matrix and clinical information
+#' Get GDC TCGA mRNA/lncRNA expression matrix and clinical information
 #'
 #' @description This function provides a powerful workflow to query, download
 #'     and prepare the newest TCGA gene expression quantification data and the
@@ -49,30 +49,20 @@
 #' @export
 
 getmrnaexpr <- function(project) {
-  if (!dir.exists("output_mRNA_lncRNA_expr")) {
-    dir.create("output_mRNA_lncRNA_expr")
-  }
-  cat("Querying begins. Make sure your network has access to GDC TCGA! \n")
-
+  if (!dir.exists("output_mRNA_lncRNA_expr")){dir.create("output_mRNA_lncRNA_expr")}
+  cli::cli_alert_info("Querying begins. Make sure your network has access to GDC TCGA! \n")
   query <- TCGAbiolinks::GDCquery(
     project = project,
     data.category = "Transcriptome Profiling",
     data.type = "Gene Expression Quantification",
     workflow.type = "STAR - Counts"
   )
-
-  cat("Downloading begins. Make sure your network has access to GDC TCGA! \n")
-
+  cli::cli_alert_info("Downloading begins. Make sure your network has access to GDC TCGA! \n")
   TCGAbiolinks::GDCdownload(query, files.per.chunk = 100)
-
-  print("Downloading ends. Preparing begins.")
-
+  cli::cli_alert_info("Downloading ends. Preparing begins.")
   TCGAbiolinks::GDCprepare(query, save = T, save.filename = paste0("output_mRNA_lncRNA_expr/", project, "_expr.rdata"))
-
   load(file = paste0("output_mRNA_lncRNA_expr/", project, "_expr.rdata"))
-
   se <- data
-
   clin_info <- as.data.frame(SummarizedExperiment::colData(se))
   save(clin_info, file = paste0("output_mRNA_lncRNA_expr/", project, "_clinical.rdata"))
   clin_info <- apply(clin_info,2,as.character)

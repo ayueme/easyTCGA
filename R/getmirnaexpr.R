@@ -1,4 +1,4 @@
-#' Get GDC TCGA miRNA expression matrix
+#' Get GDC TCGA miRNA expression matrix and clinical information
 #'
 #' @description This function provides a powerful workflow to query, download
 #'     and prepare the newest TCGA miRNA expression quantification data. All you
@@ -47,10 +47,8 @@
 #' @export
 
 getmirnaexpr <- function(project) {
-  if (!dir.exists("output_miRNA_expr")) {
-    dir.create("output_miRNA_expr")
-  }
-
+  if (!dir.exists("output_miRNA_expr")) {dir.create("output_miRNA_expr")}
+  cli::cli_alert_info("Querying begins. Make sure your network has access to GDC TCGA! \n")
   query <- TCGAbiolinks::GDCquery(project,
                                   data.category = "Transcriptome Profiling",
                                   data.type = "miRNA Expression Quantification"

@@ -2,6 +2,8 @@
 
 export(batch_survival)
 export(diff_analysis)
+export(getcnv)
+export(getmethybeta)
 export(getmirnaexpr)
 export(getmrnaexpr)
 export(getmrnaexpr_xena)

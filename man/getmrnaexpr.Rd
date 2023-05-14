@@ -2,7 +2,7 @@
 % Please edit documentation in R/getmrnaexpr.R
 \name{getmrnaexpr}
 \alias{getmrnaexpr}
-\title{Get TCGA mRNA/lncRNA expression matrix and clinical information}
+\title{Get GDC TCGA mRNA/lncRNA expression matrix and clinical information}
 \usage{
 getmrnaexpr(project)
 }
