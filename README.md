@@ -29,6 +29,9 @@ if(!require("survival")) install.packages("survival")
 if(!require("broom")) install.packages("broom")
 if(!require("devtools")) install.packages("devtools")
 if(!require("cli")) install.packages("cli")
+if(!require("reshape2")) install.packages("reshape2")
+if(!require("ggplot2")) install.packages("ggplot2")
+if(!require("ggpubr")) install.packages("ggpubr")
 ```
 
 再安装`easyTCGA`包：
@@ -39,7 +42,7 @@ devtools::install_github("ayueme/easyTCGA")
 
 ## 主要功能
 
-> 解决TCGA数据下载和整理问题，顺便实现差异分析和批量生存分析
+> 解决TCGA数据下载和整理问题，顺便实现差异分析和批量生存分析，并提供几个简单的可视化函数
 
 - `getmrnaexpr`
   - 只需要提供正确的`TCGA project`名字即可；
@@ -85,6 +88,12 @@ devtools::install_github("ayueme/easyTCGA")
   - 与`getmrnaexpr`，`getmirnaexpr`函数无缝对接，直接使用其输出结果即可，无需任何整理；
   - 支持`count，tpm，fpkm`3种格式的数据，如果是`counts`，则通过`DESeq2::vst()`进行转换，如果是`tpm/fpkm`，则进行`log2(x + 0.1)`转换；
   - 支持打印基因序号到屏幕，方便定位有问题的基因
+- 可视化函数
+  - 主要用来进行一些简单的探索；每个函数都会返回画图数据，方便你自己探索；
+  - `plot_gene`：任意数量基因在任意癌种（TCGA33种其中之一都可以）的任意分组中的表达量箱线图；
+  - `plot_gene_paired`：任意基因在某一癌种配对样本中的表达量配对箱线图；
+  - `plot_km`：根据任意基因的表达量分组，并画出K-M生存曲线（支持最佳截点）
+
 
 ## 使用教程
 

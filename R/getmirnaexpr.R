@@ -45,7 +45,7 @@
 #' @return miRNA expression matrix and clinical information. The data are saved
 #'     in the directory of "output_miRNA_expr".
 #' @export
-
+globalVariables("data")
 getmirnaexpr <- function(project) {
   if (!dir.exists("output_miRNA_expr")) {dir.create("output_miRNA_expr")}
   cli::cli_alert_info("Querying begins. Make sure your network has access to GDC TCGA! \n")

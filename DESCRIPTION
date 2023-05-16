@@ -1,6 +1,6 @@
 Package: easyTCGA
 Title: Make TCGA analysis easy
-Version: 0.0.1.2000
+Version: 0.0.1.3000
 Authors@R: 
     person(given = "Yue", family = "Li", , "1272246204@qq.com", role = c("aut", "cre"))
 Description: This packages provides several powerful functions to speed up the
@@ -22,6 +22,9 @@ Imports:
     survival,
     utils,
     survminer,
-    data.table
+    data.table,
+    ggplot2,
+    ggpubr,
+    reshape2
 Depends: 
     R (>= 2.10)

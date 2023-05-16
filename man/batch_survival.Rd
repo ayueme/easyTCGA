@@ -15,25 +15,25 @@ batch_survival(
 )
 }
 \arguments{
-\item{exprset}{Expression matrix from getmrnaexpr() or getmirnaexpr().}
+\item{exprset}{expression matrix from getmrnaexpr() or getmirnaexpr().}
 
-\item{clin}{Clinical information from getmrnaexpr() or getmirnaexpr().}
+\item{clin}{clinical information from getmrnaexpr() or getmirnaexpr().}
 
-\item{expr_type}{Type of expression matrix, one of count, tpm, fpkm.
+\item{expr_type}{type of expression matrix, one of count, tpm, fpkm.
 If "count", the expression matrix will be transformed by DESeq2::vst() or
 DESeq2::varianceStabilizingTransformation. For other types, the expression
 will be transformed by log2(x + 0.1).}
 
-\item{optimal_cut}{Use "optimal" cutpoint to do survival analysis. If FALSE,
+\item{optimal_cut}{use "optimal" cutpoint to do survival analysis. If FALSE,
 median of gene expression will be used. Optimal cutpoint is calculated by
 survminer::surv_cutpoint().}
 
-\item{project}{Characters used as the part of file name when saving results.}
+\item{project}{characters used as the part of file name when saving results.}
 
-\item{min_sample_size}{Min sample size of each group for survival analysis,
+\item{min_sample_size}{min sample size of each group for survival analysis,
 default is 5.}
 
-\item{print_index}{Print index, default is TRUE.}
+\item{print_index}{print index, default is TRUE.}
 }
 \value{
 a list of survival analysis results, both log-rank and cox regression

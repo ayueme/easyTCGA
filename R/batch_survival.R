@@ -4,19 +4,19 @@
 #'    cox regression according to the "optimal" cutpoint or median of gene
 #'    expression. Support mRNA, lncRNA and miRNA expression matrix(count, tpm,
 #'    fpkm are all supported).
-#' @param exprset Expression matrix from getmrnaexpr() or getmirnaexpr().
-#' @param clin Clinical information from getmrnaexpr() or getmirnaexpr().
-#' @param expr_type Type of expression matrix, one of count, tpm, fpkm.
+#' @param exprset expression matrix from getmrnaexpr() or getmirnaexpr().
+#' @param clin clinical information from getmrnaexpr() or getmirnaexpr().
+#' @param expr_type type of expression matrix, one of count, tpm, fpkm.
 #'    If "count", the expression matrix will be transformed by DESeq2::vst() or
 #'    DESeq2::varianceStabilizingTransformation. For other types, the expression
 #'    will be transformed by log2(x + 0.1).
-#' @param optimal_cut Use "optimal" cutpoint to do survival analysis. If FALSE,
+#' @param optimal_cut use "optimal" cutpoint to do survival analysis. If FALSE,
 #'    median of gene expression will be used. Optimal cutpoint is calculated by
 #'    survminer::surv_cutpoint().
-#' @param project Characters used as the part of file name when saving results.
-#' @param min_sample_size Min sample size of each group for survival analysis,
+#' @param project characters used as the part of file name when saving results.
+#' @param min_sample_size min sample size of each group for survival analysis,
 #'    default is 5.
-#' @param print_index Print index, default is TRUE.
+#' @param print_index print index, default is TRUE.
 #'
 #' @return a list of survival analysis results, both log-rank and cox regression
 #' @export

@@ -5,7 +5,7 @@
 #' @return mRNA, lncRNA expression matrix and clinical info. The data are saved
 #'    under the directory of "output_mRNA_expr_xena".
 #' @export
-
+globalVariables(c("type","gene_type"))
 getmrnaexpr_xena <- function(expr_file, clin_file = NULL){
 
   cli::cli_alert_info("Make sure your files are downloaded from https://gdc.xenahubs.net.")
