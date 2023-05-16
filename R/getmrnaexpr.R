@@ -61,6 +61,7 @@ getmrnaexpr <- function(project) {
   cli::cli_alert_info("Downloading begins. Make sure your network has access to GDC TCGA! \n")
   TCGAbiolinks::GDCdownload(query, files.per.chunk = 100)
   cli::cli_alert_info("Downloading ends. Preparing begins.")
+  if(length(project)>1){project <- paste(project,collapse = "_")}
   TCGAbiolinks::GDCprepare(query, save = T, save.filename = paste0("output_mRNA_lncRNA_expr/", project, "_expr.rdata"))
   load(file = paste0("output_mRNA_lncRNA_expr/", project, "_expr.rdata"))
   se <- data
