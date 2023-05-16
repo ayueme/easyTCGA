@@ -55,7 +55,7 @@ plot_gene <- function(exprset,marker,group){
 #' @return box plot and the plotting data
 #' @export
 #'
-globalVariables("sample_id")
+
 plot_gene_paired <- function(exprset, marker){
   # get paired samples
   sample_group <- ifelse(as.numeric(substr(colnames(exprset),14,15))<10,"tumor","normal")

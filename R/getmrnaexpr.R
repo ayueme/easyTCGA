@@ -47,7 +47,8 @@
 #'     corresponding clinical information. The data are saved in the directory
 #'     of "output_mRNA_lncRNA_expr".
 #' @export
-globalVariables("data")
+#'
+
 getmrnaexpr <- function(project) {
   if (!dir.exists("output_mRNA_lncRNA_expr")){dir.create("output_mRNA_lncRNA_expr")}
   cli::cli_alert_info("Querying begins. Make sure your network has access to GDC TCGA! \n")

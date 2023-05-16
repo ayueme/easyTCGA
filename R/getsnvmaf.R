@@ -44,7 +44,7 @@
 #' @return maf file and clinical information, which can be directly used by
 #'     maftools::read.maf(). The data are saved in the directory of "output_snv"
 #' @export
-globalVariables("data")
+
 getsnvmaf <- function(project){
   if (!dir.exists("output_snv")) {
     dir.create("output_snv")

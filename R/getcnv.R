@@ -105,7 +105,7 @@ getcnv <- function(project){
 #'    probe information. The data are saved in the directory of "output_methy".
 #' @export
 #'
-globalVariables("data")
+
 getmethybeta <- function(project){
   if (!dir.exists("output_methy")){dir.create("output_methy")}
   cli::cli_alert_info("Querying begins. Make sure your network has access to GDC TCGA! \n")
