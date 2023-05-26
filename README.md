@@ -30,6 +30,7 @@ if(!require("broom")) install.packages("broom")
 if(!require("devtools")) install.packages("devtools")
 if(!require("cli")) install.packages("cli")
 if(!require("reshape2")) install.packages("reshape2")
+if(!require("data.table")) install.packages("data.table")
 if(!require("ggplot2")) install.packages("ggplot2")
 if(!require("ggpubr")) install.packages("ggpubr")
 ```
@@ -42,7 +43,7 @@ devtools::install_github("ayueme/easyTCGA")
 
 ## 主要功能
 
-> 解决TCGA数据下载和整理问题，顺便实现差异分析和批量生存分析，并提供几个简单的可视化函数
+> 解决TCGA（GTEx）数据下载和整理问题，顺便实现一些常见的分析和可视化
 
 - `getmrnaexpr`
   - 只需要提供正确的`TCGA project`名字即可；
@@ -70,13 +71,15 @@ devtools::install_github("ayueme/easyTCGA")
   - 只需要提供正确的`TCGA project`名字即可；
   - 自动下载并整理`copy number variation`数据；数据保存到当前工作目录下的`output_cnv`文件夹下；
   - 下载的数据为最新数据，和`GDC TCGA`[官网](https://portal.gdc.cancer.gov/)保持一致
-
 - `getmethybeta`
   - 只需要提供正确的`TCGA project`名字即可；
   - 自动下载并整理`450K`的`DNA methylation`的`beta值矩阵`，以及对应的临床信息，数量和顺序完全一致，无需再次整理；
   - 自动整理探针信息，比如探针对应的`gene symbol`等，基于`GRCh 38`；
   - 数据保存在当前工作目录下的`output_methy`文件夹下；
   - 下载的数据为最新数据，和`GDC TCGA`[官网](https://portal.gdc.cancer.gov/)保持一致
+- `getpancancer_xena`
+  - 实现对泛癌数据的整理，支持`TCGA`、`GTEx`，以及整合`TCGA+GTEx`
+  - 只需提供相应的表达矩阵文件和样本信息文件即可
 
 - `diff_analysis`
   - 与`getmrnaexpr`，`getmirnaexpr`，`getmrnaexpr_xena`函数无缝对接，直接使用其输出结果即可，无需任何整理（默认对tumor和normal组进行差异分析）；
@@ -97,7 +100,7 @@ devtools::install_github("ayueme/easyTCGA")
 
 ## 使用教程
 
-文字版使用教程请关注公众号：**医学和生信笔记**
+文字版使用教程请关注公众号：**医学和生信笔记**，公众号教程最新，更新最快。
 
 视频版教程请关注哔哩哔哩：[阿越就是我](https://space.bilibili.com/42460432)
 
@@ -112,11 +115,12 @@ B站，公众号，Github，粉丝QQ群，都可以。
 ## TO DO
 
 - [x] 支持`XENA`网站下载的`gene expression`和临床数据的整理
-- [ ] 支持`XENA`泛癌数据的整理，对电脑内存要求较高，正在优化代码中......
+- [x] 支持`XENA`泛癌数据的整理，对电脑内存要求较高，正在优化代码中......
 - [x] 增加对`miRNA`的差异分析支持
 - [x] 增加对`miRNA`的批量生存分析支持
 - [x] 增加对自定义表达矩阵/自定义分组差异分析的支持
 - [ ] 增加对多分组差异分析的支持
 - [x] 增加对`lncRNA`的差异分析和批量生存分析支持
+- [ ] 实现一些常见的分析和可视化
 - [ ] ......
 

@@ -1,6 +1,6 @@
 Package: easyTCGA
 Title: Make TCGA analysis easy
-Version: 0.0.1.3000
+Version: 0.0.1.4000
 Authors@R: 
     person(given = "Yue", family = "Li", , "1272246204@qq.com", role = c("aut", "cre"))
 Description: This packages provides several powerful functions to speed up the
@@ -27,4 +27,4 @@ Imports:
     ggpubr,
     reshape2
 Depends: 
-    R (>= 2.10)
+    R (>= 4.1.0)
