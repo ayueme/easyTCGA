@@ -9,7 +9,8 @@ getpancancer_xena(
   tcga_clin_file,
   gtex_expr_file,
   gtex_pheno_file,
-  type = c("tcga", "gtex", "tcga+gtex")
+  type = c("tcga", "gtex", "tcga+gtex"),
+  save_lnc = TRUE
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ tcga_expr_file and tcga_clin_file should be provided. "gtex" for only GTEx
 pan-cancer, gtex_expr_file and gtex_pheno_file should be provided.
 "tcga+gtex" for combined TCGA and GTEX pan-cancer, all the 4 files should
 be provided.}
+
+\item{save_lnc}{save lncRNA data, default is "TRUE"}
 }
 \value{
 pan-cancer expression matrix and clinical info. The data are saved

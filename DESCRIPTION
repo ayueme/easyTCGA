@@ -1,6 +1,6 @@
 Package: easyTCGA
 Title: Make TCGA analysis easy
-Version: 0.0.1.4000
+Version: 0.0.1.5000
 Authors@R: 
     person(given = "Yue", family = "Li", , "1272246204@qq.com", role = c("aut", "cre"))
 Description: This packages provides several powerful functions to speed up the
