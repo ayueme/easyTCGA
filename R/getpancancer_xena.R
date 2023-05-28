@@ -28,7 +28,6 @@
 #' @return pan-cancer expression matrix and clinical info. The data are saved
 #'    under the directory of "output_pancancer_xena".
 #' @importFrom data.table :=
-#' @importFrom data.table .SD
 #' @importFrom data.table transpose
 #' @importFrom data.table setDT
 #' @importFrom data.table setcolorder
@@ -52,7 +51,7 @@ getpancancer_xena <- function(tcga_expr_file,tcga_clin_file,
     # mRNA
     message("=> Extracting mRNA....")
     tcga_expr_mrna <- merge(gencodev23_mrna,tcga_expr, by = "gene_id")
-    tcga_expr_mrna[, data.table::`:=`(rmea=rowMeans(data.table::.SD)),.SDcols=-c(1:2)]
+    tcga_expr_mrna[, `:=`(rmea=rowMeans(.SD)),.SDcols=-c(1:2)]
     tcga_expr_mrna <- tcga_expr_mrna[order(-rmea)]
     tcga_expr_mrna <- tcga_expr_mrna[!duplicated(gene_name)]
     tcga_expr_mrna[,c("gene_id","rmea"):=NULL]
@@ -62,7 +61,7 @@ getpancancer_xena <- function(tcga_expr_file,tcga_clin_file,
       #lncrna
       message("=> Extracting lncRNA....")
       tcga_expr_lncrna <- merge(gencodev23_lncrna,tcga_expr, by = "gene_id")
-      tcga_expr_lncrna[, data.table::`:=`(rmea=rowMeans(data.table::.SD)),.SDcols=-c(1:2)]
+      tcga_expr_lncrna[, `:=`(rmea=rowMeans(.SD)),.SDcols=-c(1:2)]
       tcga_expr_lncrna <- tcga_expr_lncrna[order(-rmea)]
       tcga_expr_lncrna <- tcga_expr_lncrna[!duplicated(gene_name)]
       tcga_expr_lncrna[,c("gene_id","rmea"):=NULL]
@@ -94,7 +93,7 @@ getpancancer_xena <- function(tcga_expr_file,tcga_clin_file,
     # mRNA
     message("=> Extracting mRNA....")
     gtex_expr_mrna <- merge(gencodev23_mrna,gtex_expr, by = "gene_id")
-    gtex_expr_mrna[, data.table::`:=`(rmea=rowMeans(data.table::.SD)),.SDcols=-c(1:2)]
+    gtex_expr_mrna[, `:=`(rmea=rowMeans(.SD)),.SDcols=-c(1:2)]
     gtex_expr_mrna <- gtex_expr_mrna[order(-rmea)]
     gtex_expr_mrna <- gtex_expr_mrna[!duplicated(gene_name)]
     gtex_expr_mrna[,c("gene_id","rmea"):=NULL]
@@ -104,7 +103,7 @@ getpancancer_xena <- function(tcga_expr_file,tcga_clin_file,
       # lncRNA
       message("=> Extracting lncRNA....")
       gtex_expr_lncrna <- merge(gencodev23_lncrna,gtex_expr, by = "gene_id")
-      gtex_expr_lncrna[, data.table::`:=`(rmea=rowMeans(data.table::.SD)),.SDcols=-c(1:2)]
+      gtex_expr_lncrna[, `:=`(rmea=rowMeans(.SD)),.SDcols=-c(1:2)]
       gtex_expr_lncrna <- gtex_expr_lncrna[order(-rmea)]
       gtex_expr_lncrna <- gtex_expr_lncrna[!duplicated(gene_name)]
       gtex_expr_lncrna[,c("gene_id","rmea"):=NULL]
@@ -135,7 +134,7 @@ getpancancer_xena <- function(tcga_expr_file,tcga_clin_file,
     # mRNA
     message("=> Extracting TCGA mRNA....")
     tcga_expr_mrna <- merge(gencodev23_mrna,tcga_expr, by = "gene_id")
-    tcga_expr_mrna[, data.table::`:=`(rmea=rowMeans(data.table::.SD)),.SDcols=-c(1:2)]
+    tcga_expr_mrna[, `:=`(rmea=rowMeans(.SD)),.SDcols=-c(1:2)]
     tcga_expr_mrna <- tcga_expr_mrna[order(-rmea)]
     tcga_expr_mrna <- tcga_expr_mrna[!duplicated(gene_name)]
     tcga_expr_mrna[,c("gene_id","rmea"):=NULL]
@@ -145,7 +144,7 @@ getpancancer_xena <- function(tcga_expr_file,tcga_clin_file,
       #lncrna
       message("=> Extracting TCGA lncRNA....")
       tcga_expr_lncrna <- merge(gencodev23_lncrna,tcga_expr, by = "gene_id")
-      tcga_expr_lncrna[, data.table::`:=`(rmea=rowMeans(.SD)),.SDcols=-c(1:2)]
+      tcga_expr_lncrna[, `:=`(rmea=rowMeans(.SD)),.SDcols=-c(1:2)]
       tcga_expr_lncrna <- tcga_expr_lncrna[order(-rmea)]
       tcga_expr_lncrna <- tcga_expr_lncrna[!duplicated(gene_name)]
       tcga_expr_lncrna[,c("gene_id","rmea"):=NULL]
@@ -174,7 +173,7 @@ getpancancer_xena <- function(tcga_expr_file,tcga_clin_file,
     # mRNA
     message("=> Extracting GTEx mRNA....")
     gtex_expr_mrna <- merge(gencodev23_mrna,gtex_expr, by = "gene_id")
-    gtex_expr_mrna[, data.table::`:=`(rmea=rowMeans(data.table::.SD)),.SDcols=-c(1:2)]
+    gtex_expr_mrna[, `:=`(rmea=rowMeans(.SD)),.SDcols=-c(1:2)]
     gtex_expr_mrna <- gtex_expr_mrna[order(-rmea)]
     gtex_expr_mrna <- gtex_expr_mrna[!duplicated(gene_name)]
     gtex_expr_mrna[,c("gene_id","rmea"):=NULL]
@@ -184,7 +183,7 @@ getpancancer_xena <- function(tcga_expr_file,tcga_clin_file,
       # lncRNA
       message("=> Extracting GTEx lncRNA....")
       gtex_expr_lncrna <- merge(gencodev23_lncrna,gtex_expr, by = "gene_id")
-      gtex_expr_lncrna[, data.table::`:=`(rmea=rowMeans(data.table::.SD)),.SDcols=-c(1:2)]
+      gtex_expr_lncrna[, `:=`(rmea=rowMeans(.SD)),.SDcols=-c(1:2)]
       gtex_expr_lncrna <- gtex_expr_lncrna[order(-rmea)]
       gtex_expr_lncrna <- gtex_expr_lncrna[!duplicated(gene_name)]
       gtex_expr_lncrna[,c("gene_id","rmea"):=NULL]
@@ -201,17 +200,17 @@ getpancancer_xena <- function(tcga_expr_file,tcga_clin_file,
     save(gtex_pheno,file = "output_pancancer_xena/GTEx_pancancer_pheno.rdata")
     save(gtex_expr,file = "output_pancancer_xena/GTEx_pancancer_expr.rdata")
     message("=> Combining mRNA....")
-    load("output_pancancer_xena/TCGA_pancancer_mrna_clin.rdata")
-    load("output_pancancer_xena/GTEx_pancancer_mrna_pheno.rdata")
+    #load("output_pancancer_xena/TCGA_pancancer_mrna_clin.rdata")
+    #load("output_pancancer_xena/GTEx_pancancer_mrna_pheno.rdata")
     gtex_mrna_pheno <- data.table::setDT(gtex_mrna_pheno)
     tcga_mrna_clin <- data.table::setDT(tcga_mrna_clin)
     index <- gtex_mrna_pheno$primary_site %in% tcga_gtex_match$primary_site
     gtex_mrna_pheno <- gtex_mrna_pheno[index,]
     gtex_mrna_pheno <- merge(gtex_mrna_pheno,tcga_gtex_match,by="primary_site",all.x = F,all.y = F,allow.cartesian=TRUE)
-    gtex_mrna_pheno[,data.table::`:=`(sample_type="GTEx_normal")]
+    gtex_mrna_pheno[,`:=`(sample_type="GTEx_normal")]
     tcga_mrna_clin <- tcga_mrna_clin[,c(1,3,35:19759)]
-    tcga_mrna_clin[,data.table::`:=`(primary_site = project)]
-    tcga_mrna_clin[,data.table::`:=`(sample_type=ifelse(as.numeric(substr(sample_id,14,15))<10,"TCGA_tumor","TCGA_normal"))]
+    tcga_mrna_clin[,`:=`(primary_site = project)]
+    tcga_mrna_clin[,`:=`(sample_type=ifelse(as.numeric(substr(sample_id,14,15))<10,"TCGA_tumor","TCGA_normal"))]
     data.table::setcolorder(tcga_mrna_clin,match(colnames(tcga_mrna_clin),colnames(gtex_mrna_pheno)))
     tcga_gtex_mrna_pheno <- rbind(tcga_mrna_clin,gtex_mrna_pheno)
     data.table::setcolorder(tcga_gtex_mrna_pheno,c(19728,19729,1,2,3:19727))
@@ -219,17 +218,17 @@ getpancancer_xena <- function(tcga_expr_file,tcga_clin_file,
     save(tcga_gtex_mrna_pheno,file="output_pancancer_xena/TCGA_GTEx_pancancer_mrna_pheno.rdata")
     if(save_lnc){
       message("=> Combining lncRNA....")
-      load("output_pancancer_xena/GTEx_pancancer_lncrna_pheno.rdata")
-      load("output_pancancer_xena/TCGA_pancancer_lncrna_clin.rdata")
+      #load("output_pancancer_xena/GTEx_pancancer_lncrna_pheno.rdata")
+      #load("output_pancancer_xena/TCGA_pancancer_lncrna_clin.rdata")
       gtex_lncrna_pheno <- data.table::setDT(gtex_lncrna_pheno)
       tcga_lncrna_clin <- data.table::setDT(tcga_lncrna_clin)
       index <- gtex_lncrna_pheno$primary_site %in% tcga_gtex_match$primary_site
       gtex_lncrna_pheno <- gtex_lncrna_pheno[index,]
       gtex_lncrna_pheno <- merge(gtex_lncrna_pheno,tcga_gtex_match,by="primary_site",all.x = F,all.y = F,allow.cartesian=TRUE)
-      gtex_lncrna_pheno[,data.table::`:=`(sample_type="GTEx_normal")]
+      gtex_lncrna_pheno[,`:=`(sample_type="GTEx_normal")]
       tcga_lncrna_clin <- tcga_lncrna_clin[,c(1,3,35:14395)]
-      tcga_lncrna_clin[,data.table::`:=`(primary_site = project)]
-      tcga_lncrna_clin[,data.table::`:=`(sample_type=ifelse(as.numeric(substr(sample_id,14,15))<10,"TCGA_tumor","TCGA_normal"))]
+      tcga_lncrna_clin[,`:=`(primary_site = project)]
+      tcga_lncrna_clin[,`:=`(sample_type=ifelse(as.numeric(substr(sample_id,14,15))<10,"TCGA_tumor","TCGA_normal"))]
       data.table::setcolorder(tcga_lncrna_clin,match(colnames(tcga_lncrna_clin),colnames(gtex_lncrna_pheno)))
       tcga_gtex_lncrna_pheno <- rbind(tcga_lncrna_clin,gtex_lncrna_pheno)
       data.table::setcolorder(tcga_gtex_lncrna_pheno,c(14364,14365,1,2,3:14363))
