@@ -4,7 +4,16 @@
 \alias{diff_analysis}
 \title{Differential analysis}
 \usage{
-diff_analysis(exprset, project, is_count = TRUE, group = NULL, save = FALSE)
+diff_analysis(
+  exprset,
+  project,
+  is_count = TRUE,
+  logFC_cut = 0,
+  pvalue_cut = 1,
+  adjpvalue_cut = 1,
+  group = NULL,
+  save = FALSE
+)
 }
 \arguments{
 \item{exprset}{expression matrix prepared by getmrnaexpr()/getmirnaexpr()/
@@ -13,9 +22,15 @@ expression matrix, the argument "group" must be provided}
 
 \item{project}{characters used as part of file name}
 
-\item{is_count}{the expression matrix is count or not. Default is TRUE. If
-TRUE, the DEA will be done by DESeq2, egdeR and limma; if FALSE, the DEA
-will be done by limma and wilcoxon test}
+\item{is_count}{if the expression matrix is count. Default is TRUE. If TRUE,
+the DEA will be done by DESeq2, egdeR and limma; if FALSE, the DEA will
+be done by limma and wilcoxon test}
+
+\item{logFC_cut}{threshold of logFC used for filtering the DEGs, default is 0}
+
+\item{pvalue_cut}{p value cutpoint of the DEGs, default is 1}
+
+\item{adjpvalue_cut}{adjusted p value cutpoint of the DEGs, default is 1}
 
 \item{group}{a factor with two levels, specifying the group of samples,
 which should be the same length as your sample size. If use your own

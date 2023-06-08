@@ -6,9 +6,12 @@
 #'     getmrnaexpr_xena(), or your own expression matrix. If use your own
 #'     expression matrix, the argument "group" must be provided
 #' @param project characters used as part of file name
-#' @param is_count the expression matrix is count or not. Default is TRUE. If
-#'     TRUE, the DEA will be done by DESeq2, egdeR and limma; if FALSE, the DEA
-#'     will be done by limma and wilcoxon test
+#' @param is_count if the expression matrix is count. Default is TRUE. If TRUE,
+#'     the DEA will be done by DESeq2, egdeR and limma; if FALSE, the DEA will
+#'     be done by limma and wilcoxon test
+#' @param logFC_cut threshold of logFC used for filtering the DEGs, default is 0
+#' @param pvalue_cut p value cutpoint of the DEGs, default is 1
+#' @param adjpvalue_cut adjusted p value cutpoint of the DEGs, default is 1
 #' @param group a factor with two levels, specifying the group of samples,
 #'     which should be the same length as your sample size. If use your own
 #'     expression matrix, it must be provided
@@ -20,6 +23,9 @@
 diff_analysis <- function(exprset,
                           project,
                           is_count = TRUE,
+                          logFC_cut = 0,
+                          pvalue_cut = 1,
+                          adjpvalue_cut = 1,
                           group = NULL,
                           save = FALSE) {
   # check group
@@ -37,15 +43,12 @@ diff_analysis <- function(exprset,
   if (is_count) {
     message("=> Running DESeq2")
     ## deseq2
-    dds1 <- DESeq2::DESeqDataSetFromMatrix(
-      countData = exprset,
-      colData = metadata,
-      design = ~group
-    )
-    dds <- DESeq2::DESeq(dds1)
+    dds <- DESeq2::DESeqDataSetFromMatrix(countData = exprset,colData = metadata,design = ~group)
+    dds <- DESeq2::DESeq(dds)
     res <- DESeq2::results(dds, tidy = T)
     names(res)[1] <- "genesymbol"
     deg_deseq2 <- stats::na.omit(res)
+    deg_deseq2 <- subset(deg_deseq2, abs(log2FoldChange)>logFC_cut & padj<adjpvalue_cut & pvalue<pvalue_cut)
     res_diff[[1]] <- deg_deseq2
     names(res_diff)[[1]] <- "deg_deseq2"
     ## limma voom
@@ -63,6 +66,7 @@ diff_analysis <- function(exprset,
     DEG2 <- limma::topTable(fit2, coef = 2, n = Inf)
     deg_limma <- stats::na.omit(DEG2)
     deg_limma$genesymbol <- rownames(deg_limma)
+    deg_limma <- subset(deg_limma, abs(logFC)>logFC_cut & adj.P.Val<adjpvalue_cut & P.Value<pvalue_cut)
     res_diff[[2]] <- deg_limma
     names(res_diff)[[2]] <- "deg_limma"
     ## edger
@@ -73,6 +77,7 @@ diff_analysis <- function(exprset,
     DEG <- edgeR::topTags(qlf, n = Inf)
     deg_edger <- as.data.frame(DEG)
     deg_edger$genesymbol <- rownames(deg_edger)
+    deg_edger <- subset(deg_edger, abs(logFC)>logFC_cut & FDR<adjpvalue_cut & PValue<pvalue_cut)
     res_diff[[3]] <- deg_edger
     names(res_diff)[[3]] <- "deg_edger"
   } else {
@@ -98,6 +103,7 @@ diff_analysis <- function(exprset,
     deg_limma <- limma::topTable(fit, coef = 2, number = Inf)
     deg_limma <- stats::na.omit(deg_limma)
     deg_limma$genesymbol <- rownames(deg_limma)
+    deg_limma <- subset(deg_limma, abs(logFC)>logFC_cut & adj.P.Val<adjpvalue_cut & P.Value<pvalue_cut)
     res_diff[[1]] <- deg_limma
     names(res_diff)[[1]] <- "deg_limma"
 
@@ -116,9 +122,10 @@ diff_analysis <- function(exprset,
   }
 
   if (save) {
-    if (!file.exists("output_diff")) {dir.create("output_diff")}
+    if (!dir.exists("output_diff")) {dir.create("output_diff")}
     save(res_diff, file = paste0("output_diff/", project, "_diff_results.rdata"))
   }
   message("=> Analysis done.")
   return(res_diff)
 }
+
