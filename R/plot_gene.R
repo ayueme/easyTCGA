@@ -62,10 +62,11 @@ plot_gene_paired <- function(exprset, marker){
   tmp <- data.frame(sample_group = sample_group, sample_id=colnames(exprset))
   tmp_nor <- tmp[tmp$sample_group=="normal",]
   tmp_tum <- tmp[tmp$sample_group=="tumor",]
-  patient <- substr(tmp_nor$sample_id,1,12)
-  keep <- substr(tmp_tum$sample_id,1,12) %in% patient
-  tmp_tum <- tmp_tum[keep,]
+  keep <- intersect(substr(tmp_tum$sample_id,1,12),substr(tmp_nor$sample_id,1,12))
+  tmp_tum <- tmp_tum[substr(tmp_tum$sample_id,1,12) %in% keep,]
   tmp_tum <- tmp_tum[!duplicated(substr(tmp_tum$sample_id,1,12)),]
+  tmp_nor <- tmp_nor[substr(tmp_nor$sample_id,1,12) %in% keep,]
+  tmp_nor <- tmp_nor[!duplicated(substr(tmp_nor$sample_id,1,12)),]
   tmp_pair <- rbind(tmp_tum,tmp_nor)
   # get marker expr
   tmp <- t(exprset)

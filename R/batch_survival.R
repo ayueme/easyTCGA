@@ -28,29 +28,25 @@ batch_survival <- function(exprset,
                            project,
                            min_sample_size = 5,
                            print_index = TRUE) {
-  if (!dir.exists("output_survival")) {
-    dir.create("output_survival")
-  }
+  if (!dir.exists("output_survival")){dir.create("output_survival")}
 
   if (expr_type == "counts") {
-    object <- DESeq2::DESeqDataSetFromMatrix(
-      as.matrix(exprset),
-      S4Vectors::DataFrame(row.names = colnames(exprset)), ~1
-    )
+    object <- DESeq2::DESeqDataSetFromMatrix(as.matrix(exprset),
+                                             S4Vectors::DataFrame(row.names = colnames(exprset)), ~1)
     object <- DESeq2::estimateSizeFactors(object)
     nsubs <- sum(rowMeans(DESeq2::counts(object, normalized = TRUE)) > 5)
     if (nsubs > 1000) {
-      cli::cli_alert_info("Your exprset will be transformed by DESeq2::vst.")
+      message("=> Your exprset will be transformed by DESeq2::vst.")
       exprset <- DESeq2::vst(as.matrix(exprset))
     } else {
-      cli::cli_alert_info("Your exprset will be transformed by DESeq2::varianceStabilizingTransformation.")
+      message("=> Your exprset will be transformed by DESeq2::varianceStabilizingTransformation.")
       exprset <- DESeq2::varianceStabilizingTransformation(as.matrix(exprset))
     }
   } else {
-    cli::cli_alert_info("Your exprset will be transformed by log2(x + 0.1).")
+    message("=> Your exprset will be transformed by log2(x + 0.1).")
     exprset <- log2(exprset + 0.1)
   }
-  cli::cli_alert_info("Only do survival analysis on tumor samples!")
+  message("=> Only do survival analysis on tumor samples!")
   keep_samples <- as.numeric(substr(colnames(exprset), 14, 15)) < 10
   exprset <- exprset[, keep_samples]
   clin <- clin[keep_samples, c("days_to_last_follow_up", "vital_status")]
@@ -65,7 +61,7 @@ batch_survival <- function(exprset,
   cox.result <- list()
 
   if (optimal_cut) {
-    cli::cli_alert_info(" => Finding optimal cutpoint.")
+    message(" => Finding optimal cutpoint.")
     exprset <- exprset[apply(exprset, 1, function(x) sum(duplicated(x)) < 0.8 * ncol(exprset)), ]
     expr_clin <- cbind(clin, t(exprset))
     gene <- colnames(expr_clin)[-c(1:2)]
@@ -76,7 +72,7 @@ batch_survival <- function(exprset,
     )
     res.cat <- survminer::surv_categorize(res.cut)
 
-    cli::cli_alert_info(" => Running batch log-rank...")
+    message(" => Running batch log-rank...")
     for (i in 1:length(gene)) {
       if (print_index) print(i)
       group <- res.cat[, i + 2]
@@ -93,7 +89,7 @@ batch_survival <- function(exprset,
     res_survival[[1]] <- res.logrank
     names(res_survival)[[1]] <- "res.logrank"
 
-    cli::cli_alert_info(" => Running batch Cox...")
+    message(" => Running batch Cox...")
     for (i in 1:length(gene)) {
       if (print_index) print(i)
       group <- res.cat[, i + 2]
@@ -111,13 +107,14 @@ batch_survival <- function(exprset,
     names(res_survival)[[2]] <- "res.cox"
 
     save(res_survival, file = paste0("output_survival/", project, "_survival_results.rdata"))
-    cli::cli_alert_success("Analysis done.")
+    message("=> Analysis done.")
     return(res_survival)
-  } else {
+  }
+  else {
     expr_clin <- cbind(clin, t(exprset))
     gene <- colnames(expr_clin)[-c(1:2)]
 
-    cli::cli_alert_info(" => Running batch log-rank...")
+    message(" => Running batch log-rank...")
     for (i in 1:length(gene)) {
       if (print_index) print(i)
       group <- ifelse(expr_clin[, gene[i]] > stats::median(expr_clin[, gene[i]]), "high", "low")
@@ -134,7 +131,7 @@ batch_survival <- function(exprset,
     res_survival[[1]] <- res.logrank
     names(res_survival)[[1]] <- "res.logrank"
 
-    cli::cli_alert_info(" => Running batch Cox...")
+    message(" => Running batch Cox...")
     for (i in 1:length(gene)) {
       if (print_index) print(i)
       group <- ifelse(expr_clin[, gene[i]] > stats::median(expr_clin[, gene[i]]), "high", "low")
@@ -152,7 +149,7 @@ batch_survival <- function(exprset,
     names(res_survival)[[2]] <- "res.cox"
 
     save(res_survival, file = paste0("output_survival/", project, "_survival_results.rdata"))
-    cli::cli_alert_success("Analysis done.")
+    message("=> Analysis done.")
     return(res_survival)
   }
 }

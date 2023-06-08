@@ -48,42 +48,59 @@
 
 getmirnaexpr <- function(project) {
   if (!dir.exists("output_miRNA_expr")) {dir.create("output_miRNA_expr")}
-  cli::cli_alert_info("Querying begins. Make sure your network has access to GDC TCGA! \n")
+  message("=> Querying begins. Make sure your network has access to GDC TCGA! \n")
   query <- TCGAbiolinks::GDCquery(project,
                                   data.category = "Transcriptome Profiling",
-                                  data.type = "miRNA Expression Quantification"
-  )
-
+                                  data.type = "miRNA Expression Quantification")
+  message("=> Downloading begins. Make sure your network has access to GDC TCGA! \n")
   TCGAbiolinks::GDCdownload(query)
-  TCGAbiolinks::GDCprepare(query, save = T,
-                           save.filename = paste0("output_miRNA_expr/", project, "_miRNA.rdata"))
-
-  load(file = paste0("output_miRNA_expr/", project, "_miRNA.rdata"))
-
-  mirna_expr_counts <- data[, c(1, seq(2, ncol(data), 3))]
-  colnames(mirna_expr_counts)[-1] <- substr(colnames(mirna_expr_counts)[-1], 12, 39)
-  rownames(mirna_expr_counts) <- mirna_expr_counts[,1]
-  mirna_expr_counts <- mirna_expr_counts[,-1]
-  save(mirna_expr_counts, file = paste0("output_miRNA_expr/", project, "_mirna_expr_counts.rdata"))
-  utils::write.csv(mirna_expr_counts,
-                   paste0("output_miRNA_expr/", project, "_mirna_expr_counts.csv"),
-                   quote = F,row.names = T)
-  mirna_expr_rpm <- data[, c(1, seq(3, ncol(data), 3))]
-  colnames(mirna_expr_rpm)[-1] <- substr(colnames(mirna_expr_rpm)[-1], 32, 59)
-  rownames(mirna_expr_rpm) <- mirna_expr_rpm[,1]
-  mirna_expr_rpm <- mirna_expr_rpm[,-1]
-  save(mirna_expr_rpm, file = paste0("output_miRNA_expr/", project, "_mirna_expr_rpm.rdata"))
-  utils::write.csv(mirna_expr_rpm,
-                   paste0("output_miRNA_expr/", project, "_mirna_expr_rpm.csv"),
-                   quote = F,row.names = T)
-
-  clin <- TCGAbiolinks::GDCquery_clinic(project = project, type = "clinical")
-  save(clin,file = paste0("output_miRNA_expr/",project,"_clin.rdata"))
-
-  clin_mirna <- clin[match(substr(colnames(mirna_expr_counts),1,12),clin$submitter_id),]
-  save(clin_mirna, file = paste0("output_miRNA_expr/",project,"_clin_mirna.rdata"))
-  utils::write.csv(clin_mirna,paste0("output_miRNA_expr/",project,"_clin_mirna.csv"),
-                   quote = F,row.names = F)
+  if(length(project)>1){
+    project <- paste(project,collapse = "_")
+    message("=> Downloading ends. Preparing begins.")
+    TCGAbiolinks::GDCprepare(query, save = T,save.filename = paste0("output_miRNA_expr/", project, "_miRNA.rdata"))
+    message("=> Preparing count and rpm.")
+    load(file = paste0("output_miRNA_expr/", project, "_miRNA.rdata"))
+    tmp <- data
+    mirna_expr_counts <- tmp[, c(1, seq(2, ncol(tmp), 3))]
+    colnames(mirna_expr_counts)[-1] <- substr(colnames(mirna_expr_counts)[-1], 12, 39)
+    rownames(mirna_expr_counts) <- mirna_expr_counts[,1]
+    mirna_expr_counts <- mirna_expr_counts[,-1]
+    save(mirna_expr_counts, file = paste0("output_miRNA_expr/", project, "_mirna_expr_counts.rdata"))
+    utils::write.csv(mirna_expr_counts,paste0("output_miRNA_expr/", project, "_mirna_expr_counts.csv"),quote = F,row.names = T)
+    mirna_expr_rpm <- tmp[, c(1, seq(3, ncol(tmp), 3))]
+    colnames(mirna_expr_rpm)[-1] <- substr(colnames(mirna_expr_rpm)[-1], 32, 59)
+    rownames(mirna_expr_rpm) <- mirna_expr_rpm[,1]
+    mirna_expr_rpm <- mirna_expr_rpm[,-1]
+    save(mirna_expr_rpm, file = paste0("output_miRNA_expr/", project, "_mirna_expr_rpm.rdata"))
+    utils::write.csv(mirna_expr_rpm,paste0("output_miRNA_expr/", project, "_mirna_expr_rpm.csv"),quote = F,row.names = T)
+    message("=> Successful.")
+  }
+  else{
+    message("=> Downloading ends. Preparing begins.")
+    TCGAbiolinks::GDCprepare(query, save = T,save.filename = paste0("output_miRNA_expr/", project, "_miRNA.rdata"))
+    message("=> Preparing count and rpm.")
+    load(file = paste0("output_miRNA_expr/", project, "_miRNA.rdata"))
+    tmp <- data
+    mirna_expr_counts <- tmp[, c(1, seq(2, ncol(tmp), 3))]
+    colnames(mirna_expr_counts)[-1] <- substr(colnames(mirna_expr_counts)[-1], 12, 39)
+    rownames(mirna_expr_counts) <- mirna_expr_counts[,1]
+    mirna_expr_counts <- mirna_expr_counts[,-1]
+    save(mirna_expr_counts, file = paste0("output_miRNA_expr/", project, "_mirna_expr_counts.rdata"))
+    utils::write.csv(mirna_expr_counts,paste0("output_miRNA_expr/", project, "_mirna_expr_counts.csv"),quote = F,row.names = T)
+    mirna_expr_rpm <- tmp[, c(1, seq(3, ncol(tmp), 3))]
+    colnames(mirna_expr_rpm)[-1] <- substr(colnames(mirna_expr_rpm)[-1], 32, 59)
+    rownames(mirna_expr_rpm) <- mirna_expr_rpm[,1]
+    mirna_expr_rpm <- mirna_expr_rpm[,-1]
+    save(mirna_expr_rpm, file = paste0("output_miRNA_expr/", project, "_mirna_expr_rpm.rdata"))
+    utils::write.csv(mirna_expr_rpm,paste0("output_miRNA_expr/", project, "_mirna_expr_rpm.csv"),quote = F,row.names = T)
+    message("=> Preparing clinical info.")
+    clin <- TCGAbiolinks::GDCquery_clinic(project = project, type = "clinical")
+    save(clin,file = paste0("output_miRNA_expr/",project,"_clin.rdata"))
+    clin_mirna <- clin[match(substr(colnames(mirna_expr_counts),1,12),clin$submitter_id),]
+    save(clin_mirna, file = paste0("output_miRNA_expr/",project,"_clin_mirna.rdata"))
+    utils::write.csv(clin_mirna,paste0("output_miRNA_expr/",project,"_clin_mirna.csv"),quote = F,row.names = F)
+    message("=> Successful.")
+  }
 
 }
 

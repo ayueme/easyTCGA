@@ -28,7 +28,6 @@ if(!require("limma")) BiocManager::install("limma")
 if(!require("survival")) install.packages("survival")
 if(!require("broom")) install.packages("broom")
 if(!require("devtools")) install.packages("devtools")
-if(!require("cli")) install.packages("cli")
 if(!require("reshape2")) install.packages("reshape2")
 if(!require("data.table")) install.packages("data.table")
 if(!require("ggplot2")) install.packages("ggplot2")
@@ -121,6 +120,6 @@ B站，公众号，Github，粉丝QQ群，都可以。
 - [x] 增加对自定义表达矩阵/自定义分组差异分析的支持
 - [ ] 增加对多分组差异分析的支持
 - [x] 增加对`lncRNA`的差异分析和批量生存分析支持
-- [ ] 实现一些常见的分析和可视化
+- [x] 实现一些常见的分析和可视化
 - [ ] ......
 

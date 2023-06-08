@@ -8,7 +8,7 @@
 
 getmrnaexpr_xena <- function(expr_file, clin_file = NULL){
 
-  cli::cli_alert_info("Make sure your files are downloaded from https://gdc.xenahubs.net.")
+  message("=> Make sure your files are downloaded from https://gdc.xenahubs.net.")
   if(!dir.exists("output_mrna_expr_xena")){dir.create("output_mrna_expr_xena")}
 
   exprset <- utils::read.table(expr_file,sep = "\t",header = T,check.names = F)

@@ -46,25 +46,35 @@
 #' @export
 
 getsnvmaf <- function(project){
-  if (!dir.exists("output_snv")) {
-    dir.create("output_snv")
-  }
+  if (!dir.exists("output_snv")){dir.create("output_snv")}
+  message("=> Querying begins. Make sure your network has access to GDC TCGA! \n")
   query <- TCGAbiolinks::GDCquery(
     project = project,
     data.category = "Simple Nucleotide Variation",
     data.type = "Masked Somatic Mutation",
     access = "open"
   )
+  message("=> Downloading begins. Make sure your network has access to GDC TCGA! \n")
   TCGAbiolinks::GDCdownload(query)
-  TCGAbiolinks::GDCprepare(query, save = T,
-             save.filename = paste0("output_snv/",project,"_maf.rdata"))
-  clin <- TCGAbiolinks::GDCquery_clinic(project = project, type = "clinical")
-  save(clin,file = paste0("output_snv/",project,"_clin.rdata"))
-  load(file = paste0("output_snv/",project,"_maf.rdata"))
-  snv <- data
-  snv$Tumor_Sample_Barcode <- substr(snv$Tumor_Sample_Barcode,1,12)
-  index <- unique(snv$Tumor_Sample_Barcode)
-  clin_snv <- clin[clin$submitter_id %in% index, ]
-  clin_snv$Tumor_Sample_Barcode <- clin_snv$submitter_id
-  save(snv,clin_snv, file = paste0("output_snv/",project,"_maf_clin.rdata"))
+
+  if(length(project)<2){
+    message("=> Downloading ends. Preparing begins.")
+    TCGAbiolinks::GDCprepare(query, save = T,save.filename = paste0("output_snv/",project,"_maf.rdata"))
+    clin <- TCGAbiolinks::GDCquery_clinic(project = project, type = "clinical")
+    save(clin,file = paste0("output_snv/",project,"_clin.rdata"))
+    load(file = paste0("output_snv/",project,"_maf.rdata"))
+    snv <- data
+    snv$Tumor_Sample_Barcode <- substr(snv$Tumor_Sample_Barcode,1,12)
+    index <- unique(snv$Tumor_Sample_Barcode)
+    clin_snv <- clin[clin$submitter_id %in% index, ]
+    clin_snv$Tumor_Sample_Barcode <- clin_snv$submitter_id
+    save(snv,clin_snv, file = paste0("output_snv/",project,"_maf_clin.rdata"))
+    message("=> Successful.")
+  }
+  else{
+    project <- paste(project,collapse = "_")
+    message("=> Downloading ends. Preparing begins.")
+    TCGAbiolinks::GDCprepare(query, save = T,save.filename = paste0("output_snv/",project,"_maf.rdata"))
+    message("=> Successful.")
+  }
 }
