@@ -3,12 +3,12 @@
 #' @param exprset expression matrix
 #' @param marker marker(s) you want to display
 #' @param group the groups of your samples
-#'
+#' @param return_data return the data for plotting, default is TRUE.
 #' @return box plot and the plotting data
 #' @export
 #'
 
-plot_gene <- function(exprset,marker,group){
+plot_gene <- function(exprset,marker,group,return_data = TRUE){
   tmp <- t(exprset)
   tmp <- as.data.frame(tmp[,marker])
   tmp$sample_id <- rownames(tmp)
@@ -24,7 +24,7 @@ plot_gene <- function(exprset,marker,group){
       ggpubr::stat_compare_means(ggplot2::aes(group = group,label = "p.format"),
                                  method = "kruskal.test")
     print(p1)
-    return(tmp)
+    if(return_data){return(tmp)}
   } else {
     # more than 1 marker
     tmp$group <- group
@@ -40,7 +40,7 @@ plot_gene <- function(exprset,marker,group){
                                  method = "kruskal.test")+
       ggplot2::facet_wrap(~markers, scales = "free_y")
     print(p1)
-    return(tmp)
+    if(return_data){return(tmp)}
   }
 }
 
@@ -51,12 +51,12 @@ plot_gene <- function(exprset,marker,group){
 #'
 #' @param exprset expression matrix
 #' @param marker marker(s) you want to display
-#'
+#' @param return_data return the data for plotting, default is TRUE.
 #' @return box plot and the plotting data
 #' @export
 #'
 
-plot_gene_paired <- function(exprset, marker){
+plot_gene_paired <- function(exprset, marker, return_data = TRUE){
   # get paired samples
   sample_group <- ifelse(as.numeric(substr(colnames(exprset),14,15))<10,"tumor","normal")
   tmp <- data.frame(sample_group = sample_group, sample_id=colnames(exprset))
@@ -90,7 +90,7 @@ plot_gene_paired <- function(exprset, marker){
       ggpubr::stat_compare_means(ggplot2::aes(group = sample_group,label = "p.format"),
                                  method = "kruskal.test",paired = T)
     print(p2)
-    return(tmp_pair)
+    if(return_data){return(tmp_pair)}
 
   } else {
     # more than one marker
@@ -113,7 +113,7 @@ plot_gene_paired <- function(exprset, marker){
       ggplot2::facet_wrap(~markers, scales = "free_y")
 
     print(p2)
-    return(tmp_pair)
+    if(return_data){return(tmp_pair)}
 
   }
 }
@@ -133,12 +133,13 @@ plot_gene_paired <- function(exprset, marker){
 #' @param optimal_cut use "optimal" cutpoint to do survival analysis. If FALSE,
 #'    median of expression will be used. Optimal cutpoint is calculated by
 #'    survminer::surv_cutpoint().
+#' @param return_data return the data for plotting, default is TRUE.
 #'
 #' @return K-M plot and plotting data
 #' @export
 #'
 
-plot_KM <- function(exprset, marker, clin,optimal_cut=TRUE){
+plot_KM <- function(exprset,marker,clin,optimal_cut=TRUE,return_data=TRUE){
   exprset <- exprset[marker,]
   keep_samples <- as.numeric(substr(colnames(exprset), 14, 15)) < 10
   exprset <- exprset[, keep_samples]
@@ -160,13 +161,13 @@ plot_KM <- function(exprset, marker, clin,optimal_cut=TRUE){
     p1 <- survminer::ggsurvplot(fit, data = res.cat, pval = T)
     print(p1)
     res <- list(surv_df = expr_clin, cut=res.cut[["cutpoint"]][1])
-    return(res)
+    if(return_data){return(res)}
   } else {
     expr_clin$group <- ifelse(expr_clin$gene > stats::median(expr_clin$gene),"high","low")
     fit <- survival::survfit(survival::Surv(time, event) ~ group, data = expr_clin)
     p1 <- survminer::ggsurvplot(fit, data = expr_clin, pval = T)
     print(p1)
-    return(expr_clin)
+    if(return_data){return(expr_clin)}
   }
 }
 

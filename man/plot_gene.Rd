@@ -4,7 +4,7 @@
 \alias{plot_gene}
 \title{Box plot of marker expression between groups}
 \usage{
-plot_gene(exprset, marker, group)
+plot_gene(exprset, marker, group, return_data = TRUE)
 }
 \arguments{
 \item{exprset}{expression matrix}
@@ -12,6 +12,8 @@ plot_gene(exprset, marker, group)
 \item{marker}{marker(s) you want to display}
 
 \item{group}{the groups of your samples}
+
+\item{return_data}{return the data for plotting, default is TRUE.}
 }
 \value{
 box plot and the plotting data

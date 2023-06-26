@@ -4,12 +4,14 @@
 \alias{plot_gene_paired}
 \title{Box plot of marker expression between paired normal and tumor samples}
 \usage{
-plot_gene_paired(exprset, marker)
+plot_gene_paired(exprset, marker, return_data = TRUE)
 }
 \arguments{
 \item{exprset}{expression matrix}
 
 \item{marker}{marker(s) you want to display}
+
+\item{return_data}{return the data for plotting, default is TRUE.}
 }
 \value{
 box plot and the plotting data

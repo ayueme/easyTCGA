@@ -6,26 +6,29 @@
 #'    fpkm are all supported).
 #' @param exprset expression matrix from getmrnaexpr() or getmirnaexpr().
 #' @param clin clinical information from getmrnaexpr() or getmirnaexpr().
-#' @param expr_type type of expression matrix, one of count, tpm, fpkm.
+#' @param is_count if the expression matrix is count. Default is FALSE.
 #'    If "count", the expression matrix will be transformed by DESeq2::vst() or
 #'    DESeq2::varianceStabilizingTransformation. For other types, the expression
-#'    will be transformed by log2(x + 0.1).
+#'    matrix will be detected automatically to decide whether to be transformed
+#'    by log2(x + 0.1).
 #' @param optimal_cut use "optimal" cutpoint to do survival analysis. If FALSE,
 #'    median of gene expression will be used. Optimal cutpoint is calculated by
 #'    survminer::surv_cutpoint().
 #' @param project characters used as the part of file name when saving results.
+#' @param save_data save data to local, default is FALSE.
 #' @param min_sample_size min sample size of each group for survival analysis,
 #'    default is 5.
-#' @param print_index print index, default is TRUE.
+#' @param print_index print gene index, default is TRUE.
 #'
 #' @return a list of survival analysis results, both log-rank and cox regression
 #' @export
 
 batch_survival <- function(exprset,
                            clin,
-                           expr_type = c("counts", "tpm", "fpkm"),
+                           is_count = FALSE,
                            optimal_cut = TRUE,
                            project,
+                           save_data = FALSE,
                            min_sample_size = 5,
                            print_index = TRUE) {
   if (!dir.exists("output_survival")){dir.create("output_survival")}
@@ -36,15 +39,27 @@ batch_survival <- function(exprset,
     object <- DESeq2::estimateSizeFactors(object)
     nsubs <- sum(rowMeans(DESeq2::counts(object, normalized = TRUE)) > 5)
     if (nsubs > 1000) {
-      message("=> Your exprset will be transformed by DESeq2::vst.")
+      message("=> Your exprset will be transformed by DESeq2::vst")
       exprset <- DESeq2::vst(as.matrix(exprset))
     } else {
-      message("=> Your exprset will be transformed by DESeq2::varianceStabilizingTransformation.")
+      message("=> Your exprset will be transformed by DESeq2::varianceStabilizingTransformation")
       exprset <- DESeq2::varianceStabilizingTransformation(as.matrix(exprset))
     }
   } else {
-    message("=> Your exprset will be transformed by log2(x + 0.1).")
-    exprset <- log2(exprset + 0.1)
+    message("=> Your exprset will be transformed by log2(x + 0.1)")
+    exprset <- limma::normalizeBetweenArrays(exprset)
+
+    ex <- exprset
+    qx <- as.numeric(stats::quantile(ex, c(0., 0.25, 0.5, 0.75, 0.99, 1.0), na.rm = T))
+    LogC <- (qx[5] > 100) ||
+      (qx[6] - qx[1] > 50 && qx[2] > 0) ||
+      (qx[2] > 0 && qx[2] < 1 && qx[4] > 1 && qx[4] < 2)
+
+    if (LogC) {
+      # ex[which(ex <= 0)] <- NaN
+      exprset <- log2(ex + 0.1)
+      message("=> Your exprset will be transformed by log2(x + 0.1)")
+    }else{message("=> log2 transform not needed")}
   }
   message("=> Only do survival analysis on tumor samples!")
   keep_samples <- as.numeric(substr(colnames(exprset), 14, 15)) < 10
@@ -108,7 +123,7 @@ batch_survival <- function(exprset,
 
     save(res_survival, file = paste0("output_survival/", project, "_survival_results.rdata"))
     message("=> Analysis done.")
-    return(res_survival)
+    if(save_data){return(res_survival)}
   }
   else {
     expr_clin <- cbind(clin, t(exprset))
@@ -150,6 +165,6 @@ batch_survival <- function(exprset,
 
     save(res_survival, file = paste0("output_survival/", project, "_survival_results.rdata"))
     message("=> Analysis done.")
-    return(res_survival)
+    if(save_data){return(res_survival)}
   }
 }

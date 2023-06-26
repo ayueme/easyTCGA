@@ -101,7 +101,19 @@ devtools::install_github("ayueme/easyTCGA")
 
 文字版使用教程请关注公众号：**医学和生信笔记**，公众号教程最新，更新最快。
 
-视频版教程请关注哔哩哔哩：[阿越就是我](https://space.bilibili.com/42460432)
+- [easyTCGA：1行代码搞定TCGA的6种表达矩阵和临床信息](https://mp.weixin.qq.com/s/z1fgyXLZXwmoaI39f2ftYw)
+- [easyTCGA：1行代码搞定TCGA突变maf文件下载和整理](https://mp.weixin.qq.com/s/GBkB8Hv45l06BVnyFNFzzw)
+- [easyTCGA生存分析支持最佳截点，任意基因在不同组中的表达量箱线图](https://mp.weixin.qq.com/s/Qc9m6hX-qKVJt5GzrXY9bA)
+- [TCGA、GTEx的泛癌数据也是1行代码整理](https://mp.weixin.qq.com/s/SzGB1wVH_DNBbXxvkBe5NA)
+- [任意基因在泛癌中的表达量展示](https://mp.weixin.qq.com/s/MIDRG57oRSMTyX6Gm99-3w)
+
+视频版教程请关注哔哩哔哩：[阿越就是我](https://space.bilibili.com/42460432)，（视频教程滞后于包的更新速度）
+
+- [easyTCGA：让初学者也能感受“征服”TCGA的喜悦](https://www.bilibili.com/video/BV1Jm4y1y7Qb/?share_source=copy_web&vd_source=abc21f68a9e2a784892483fd768dbafa)
+- [easyTCGA：1行代码整理TCGA的6种表达矩阵和临床信息](https://www.bilibili.com/video/BV15c411J7bJ/?share_source=copy_web&vd_source=abc21f68a9e2a784892483fd768dbafa)
+- [easyTCGA：1行代码整理TCGA的miRNA和突变数据](https://www.bilibili.com/video/BV1mP411m7Rc/?share_source=copy_web&vd_source=abc21f68a9e2a784892483fd768dbafa)
+- [easyTCGA：1行代码完成TCGA的3种差异分析](https://www.bilibili.com/video/BV1Ao4y177TY/?share_source=copy_web&vd_source=abc21f68a9e2a784892483fd768dbafa)
+- [easyTCGA：1行代码搞定两种TCGA批量生存分析](https://www.bilibili.com/video/BV18X4y1B7nB/?share_source=copy_web&vd_source=abc21f68a9e2a784892483fd768dbafa)
 
 ## 问题反馈
 
