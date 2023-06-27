@@ -46,7 +46,6 @@ batch_survival <- function(exprset,
       exprset <- DESeq2::varianceStabilizingTransformation(as.matrix(exprset))
     }
   } else {
-    message("=> Your exprset will be transformed by log2(x + 0.1)")
     exprset <- limma::normalizeBetweenArrays(exprset)
 
     ex <- exprset
@@ -76,7 +75,7 @@ batch_survival <- function(exprset,
   cox.result <- list()
 
   if (optimal_cut) {
-    message(" => Finding optimal cutpoint.")
+    message(" => Finding optimal cutpoint...")
     exprset <- exprset[apply(exprset, 1, function(x) sum(duplicated(x)) < 0.8 * ncol(exprset)), ]
     expr_clin <- cbind(clin, t(exprset))
     gene <- colnames(expr_clin)[-c(1:2)]
@@ -121,9 +120,9 @@ batch_survival <- function(exprset,
     res_survival[[2]] <- res.cox
     names(res_survival)[[2]] <- "res.cox"
 
-    save(res_survival, file = paste0("output_survival/", project, "_survival_results.rdata"))
+    if(save_data){save(res_survival,file=paste0("output_survival/",project,"_survival_results.rdata"))}
     message("=> Analysis done.")
-    if(save_data){return(res_survival)}
+    return(res_survival)
   }
   else {
     expr_clin <- cbind(clin, t(exprset))
@@ -163,8 +162,8 @@ batch_survival <- function(exprset,
     res_survival[[2]] <- res.cox
     names(res_survival)[[2]] <- "res.cox"
 
-    save(res_survival, file = paste0("output_survival/", project, "_survival_results.rdata"))
+    if(save_data){save(res_survival,file=paste0("output_survival/",project,"_survival_results.rdata"))}
     message("=> Analysis done.")
-    if(save_data){return(res_survival)}
+    return(res_survival)
   }
 }
