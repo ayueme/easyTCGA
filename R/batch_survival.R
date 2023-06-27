@@ -33,7 +33,7 @@ batch_survival <- function(exprset,
                            print_index = TRUE) {
   if (!dir.exists("output_survival")){dir.create("output_survival")}
 
-  if (expr_type == "counts") {
+  if (is_count) {
     object <- DESeq2::DESeqDataSetFromMatrix(as.matrix(exprset),
                                              S4Vectors::DataFrame(row.names = colnames(exprset)), ~1)
     object <- DESeq2::estimateSizeFactors(object)

@@ -92,8 +92,8 @@ diff_analysis <- function(exprset,
     if (LogC) {
       # ex[which(ex <= 0)] <- NaN
       exprset <- log2(ex + 0.1)
-      message("log2(x+0.1) transform finished")
-    }else{message("log2 transform not needed")}
+      message("=> log2(x+0.1) transform finished")
+    }else{message("=> log2 transform not needed")}
 
     ## limma
     message("=> Running limma")
