@@ -7,7 +7,7 @@
 getmrnaexpr(project)
 }
 \arguments{
-\item{project}{valid TCGA project name(s) from 33 TCGA projects
+\item{project}{valid TCGA project name(s) from 33 TCGA projects:
 \itemize{
 \item{ TCGA-ACC }
 \item{ TCGA-BLCA }
@@ -42,7 +42,8 @@ getmrnaexpr(project)
 \item{ TCGA-UCEC }
 \item{ TCGA-UCS }
 \item{ TCGA-UVM }
-}}
+}
+If you provide more than one TCGA project names, it will combine the data.}
 }
 \value{
 a SummarizedExperiment object, six expression matrix and the

@@ -6,7 +6,7 @@
 #'     name. It can automatically save six types of expression matrix(mRNA
 #'     counts/tpm/fpkm, lncRNA counts/tpm/fpkm) and the corresponding clinical
 #'     information, both in rdata and csv formats.
-#' @param project valid TCGA project name(s) from 33 TCGA projects
+#' @param project valid TCGA project name(s) from 33 TCGA projects:
 #' \itemize{
 #' \item{ TCGA-ACC }
 #' \item{ TCGA-BLCA }
@@ -42,6 +42,7 @@
 #' \item{ TCGA-UCS }
 #' \item{ TCGA-UVM }
 #' }
+#'    If you provide more than one TCGA project names, it will combine the data.
 #'
 #' @return a SummarizedExperiment object, six expression matrix and the
 #'     corresponding clinical information. The data are saved in the directory
@@ -72,6 +73,11 @@ getmrnaexpr <- function(project) {
   utils::write.csv(clin_info,paste0("output_mRNA_lncRNA_expr/", project, "_clinical.csv"),row.names = F)
 
   rowdata <- SummarizedExperiment::rowData(se)
+
+  id_info <- as.data.frame(rowdata@listData)
+  save(id_info,file = paste0("output_mRNA_lncRNA_expr/", project, "_id_info.rdata"))
+  utils::write.csv(id_info,paste0("output_mRNA_lncRNA_expr/", project, "_id_info.csv"),quote = F,row.names = F)
+
   se_mrna <- se[rowdata$gene_type == "protein_coding", ]
   se_lnc <- se[rowdata$gene_type == "lncRNA", ]
   expr_counts_mrna <- SummarizedExperiment::assay(se_mrna, "unstranded")
