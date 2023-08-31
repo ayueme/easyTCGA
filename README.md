@@ -10,6 +10,10 @@
 
 这几步操作又是必不可少的，我自己也经常需要重新下载整理数据。为了简化这几个流程，同时也是**让初学者也能感受到"征服"`TCGA`的喜悦**，我把自己常用的一些代码打包，写个R包玩玩。
 
+## 使用注意
+
+需要自己解决网络问题，比如访问`github，TCGA官网, google`等，如果你无法解决网络问题，那么生信数据挖掘可能不适合你......基本上你常见的生信数据库资源都是国外的，由于众所周知的原因，国外的数据很难下载，网络问题我帮不了你。
+
 ## 安装
 
 首先安装依赖包：
@@ -46,7 +50,7 @@ devtools::install_github("ayueme/easyTCGA")
 
 - `getmrnaexpr`
   - 只需要提供正确的`TCGA project`名字即可；
-  - 自动下载并整理`mRNA`和`lncRNA`的`counts，tpm，fpkm`共6种表达矩阵，以及对应的临床信息，临床信息样本顺序和表达矩阵样本顺序完全一致，无需再次整理；
+  - 自动下载并整理`mRNA`和`lncRNA`的`counts，tpm，fpkm`共6种表达矩阵（直接从官网的原始数据提取，未进行任何修改，所以是没有经过log转换的），以及对应的临床信息，临床信息样本顺序和表达矩阵样本顺序完全一致，无需再次整理；
   - 自动保存以上6种表达矩阵和临床信息到当前工作目录下的`output_mRNA_lncRNA_expr`文件夹下，并且同时保存`rdata`和`csv`两种文件格式；
   - 下载的数据为最新数据，和`GDC TCGA`[官网](https://portal.gdc.cancer.gov/)保持一致；
   - 支持通过手动下载的TCGA数据进行自动整理并完成以上过程（可参考b站教程：[easyTCGA：1行代码整理TCGA的6种表达矩阵和临床信息](https://www.bilibili.com/video/BV15c411J7bJ/?share_source=copy_web&vd_source=abc21f68a9e2a784892483fd768dbafa)）
@@ -83,6 +87,7 @@ devtools::install_github("ayueme/easyTCGA")
 - `diff_analysis`
   - 与`getmrnaexpr`，`getmirnaexpr`，`getmrnaexpr_xena`函数无缝对接，直接使用其输出结果即可，无需任何整理（默认对tumor和normal组进行差异分析）；
   - 支持`count, tpm, fpkm`和`GEO`数据，如果是`count`则自动通过3个R包进行差异分析：`DESeq2, edgeR, limma`；如果是其他类型（`tpm, fpkm`和`基因表达芯片数据`）会自动判断是否需要`log2(x + 0.1)`转换，然后使用`limma`和`wilcoxon test`做差异分析；
+  - 用`wilcoxon`秩和检验做差异分析的参考资料：[TCGA等大样本量差异分析该使用DEseq2还是edgeR呢？](https://mp.weixin.qq.com/s/PlQ9Sl6B12k9tSopSHQfyw),以及文中涉及的参考文献：https://doi.org/10.1186/s13059-022-02648-4
   - 支持输入自己的表达矩阵和**自定义分组**，分组信息需要因子型向量；
   - 输出结果默认为1个`list`，内含多种差异分析结果，支持保存`rdata`格式数据到本地
 - `batch_survival`
@@ -99,7 +104,7 @@ devtools::install_github("ayueme/easyTCGA")
 
 ## 使用教程
 
-文字版使用教程请关注公众号：**医学和生信笔记**，公众号教程最新，更新最快。
+文字版使用教程请关注公众号：**医学和生信笔记**。
 
 - [easyTCGA：1行代码搞定TCGA的6种表达矩阵和临床信息](https://mp.weixin.qq.com/s/z1fgyXLZXwmoaI39f2ftYw)
 - [easyTCGA：1行代码搞定TCGA突变maf文件下载和整理](https://mp.weixin.qq.com/s/GBkB8Hv45l06BVnyFNFzzw)
@@ -118,10 +123,6 @@ devtools::install_github("ayueme/easyTCGA")
 ## 问题反馈
 
 B站，公众号，Github，粉丝QQ群，都可以。
-
-## 使用注意
-
-需要自己解决网络问题，比如访问`github，TCGA官网, google`等，如果你无法解决网络问题，那么生信数据挖掘可能不适合你......
 
 ## TO DO
 
