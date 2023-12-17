@@ -16,32 +16,44 @@ diff_analysis(
 )
 }
 \arguments{
-\item{exprset}{expression matrix prepared by getmrnaexpr()/getmirnaexpr()/
-getmrnaexpr_xena(), or your own expression matrix. If use your own
-expression matrix, the argument "group" must be provided}
+\item{exprset}{expression matrix prepared by \code{\link[=getmrnaexpr]{getmrnaexpr()}}/\code{\link[=getmirnaexpr]{getmirnaexpr()}}/
+\code{\link[=getmrnaexpr_xena]{getmrnaexpr_xena()}}, or your own expression matrix. If use your own
+expression matrix, the argument "group" must be provided.}
 
-\item{project}{characters used as part of file name}
+\item{project}{characters used as part of file name.}
 
-\item{is_count}{if the expression matrix is count. Default is TRUE. If TRUE,
-the DEA will be done by DESeq2, egdeR and limma; if FALSE, the DEA will
-be done by limma and wilcoxon test}
+\item{is_count}{is the expression matrix type count? Default is TRUE. If TRUE,
+the DEA will be done by \code{DESeq2}, \code{egdeR} and \code{limma}; if FALSE, the DEA will
+be done by \code{limma} and \verb{wilcoxon test}.}
 
-\item{logFC_cut}{threshold of logFC used for filtering the DEGs, default is 0}
+\item{logFC_cut}{threshold of logFC used for filtering the DEGs, default is 0.}
 
-\item{pvalue_cut}{p value cutpoint of the DEGs, default is 1}
+\item{pvalue_cut}{p value cutpoint of the DEGs, default is 1.}
 
-\item{adjpvalue_cut}{adjusted p value cutpoint of the DEGs, default is 1}
+\item{adjpvalue_cut}{adjusted p value cutpoint of the DEGs, default is 1.}
 
-\item{group}{a factor with two levels, specifying the group of samples,
-which should be the same length as your sample size. If use your own
-expression matrix, it must be provided}
+\item{group}{a factor with two levels, specifying the group of samples, which
+should be the same length as your sample size. If use your own expression
+matrix, it must be provided.}
 
-\item{save}{save results to local, default is "FALSE"}
+\item{save}{save results to local, default is FALSE.}
 }
 \value{
-a list of differential analysis results
+a list of differential analysis results.
 }
 \description{
 This function can automatically do differential analysis by 4
-methods: DESeq2, egdeR, limma and wilcoxon test.
+methods: \code{DESeq2}, \code{egdeR}, \code{limma} and \verb{wilcoxon test}.
+}
+\references{
+Love MI, Huber W, Anders S (2014). “Moderated estimation of fold
+change and dispersion for RNA-seq data with DESeq2.” Genome Biology, 15, 550.
+
+Robinson MD, McCarthy DJ, Smyth GK (2010). “edgeR: a Bioconductor package for
+differential expression analysis of digital gene expression data.”
+Bioinformatics, 26(1), 139-140.
+
+Ritchie ME, Phipson B, Wu D, Hu Y, Law CW, Shi W, Smyth GK (2015). “limma
+powers differential expression analyses for RNA-sequencing and microarray
+studies.” Nucleic Acids Research, 43(7), e47.
 }

@@ -1,80 +1,102 @@
 #' Get GDC TCGA MAF files
 #'
-#' @description This function can automatically download and prepare the TCGA
-#'     maf files(masked somatic mutation) with the corresponding clinical
-#'     information. The output can be directly used by maftools::read.maf()
-#'     function.
-#' @param project one of 33 TCGA projects
-#' \itemize{
-#' \item{ TCGA-ACC }
-#' \item{ TCGA-BLCA }
-#' \item{ TCGA-BRCA }
-#' \item{ TCGA-CESC }
-#' \item{ TCGA-CHOL }
-#' \item{ TCGA-COAD }
-#' \item{ TCGA-DLBC }
-#' \item{ TCGA-ESCA }
-#' \item{ TCGA-GBM }
-#' \item{ TCGA-HNSC }
-#' \item{ TCGA-KICH }
-#' \item{ TCGA-KIRC }
-#' \item{ TCGA-KIRP }
-#' \item{ TCGA-LAML }
-#' \item{ TCGA-LGG }
-#' \item{ TCGA-LIHC }
-#' \item{ TCGA-LUAD }
-#' \item{ TCGA-LUSC }
-#' \item{ TCGA-MESO }
-#' \item{ TCGA-OV }
-#' \item{ TCGA-PAAD }
-#' \item{ TCGA-PCPG }
-#' \item{ TCGA-PRAD }
-#' \item{ TCGA-READ }
-#' \item{ TCGA-SARC }
-#' \item{ TCGA-SKCM }
-#' \item{ TCGA-STAD }
-#' \item{ TCGA-TGCT }
-#' \item{ TCGA-THCA }
-#' \item{ TCGA-THYM }
-#' \item{ TCGA-UCEC }
-#' \item{ TCGA-UCS }
-#' \item{ TCGA-UVM }
-#' }
+#' @description This function can automatically query, download and prepare the
+#' TCGA maf files(masked somatic mutation) with the corresponding clinical
+#' information. The output can be directly used by [maftools::read.maf()] function.
+#' @param project valid TCGA project name(s) from 33 TCGA projects:
+#' - TCGA-ACC
+#' - TCGA-BLCA
+#' - TCGA-BRCA
+#' - TCGA-CESC
+#' - TCGA-CHOL
+#' - TCGA-COAD
+#' - TCGA-DLBC
+#' - TCGA-ESCA
+#' - TCGA-GBM
+#' - TCGA-HNSC
+#' - TCGA-KICH
+#' - TCGA-KIRC
+#' - TCGA-KIRP
+#' - TCGA-LAML
+#' - TCGA-LGG
+#' - TCGA-LIHC
+#' - TCGA-LUAD
+#' - TCGA-LUSC
+#' - TCGA-MESO
+#' - TCGA-OV
+#' - TCGA-PAAD
+#' - TCGA-PCPG
+#' - TCGA-PRAD
+#' - TCGA-READ
+#' - TCGA-SARC
+#' - TCGA-SKCM
+#' - TCGA-STAD
+#' - TCGA-TGCT
+#' - TCGA-THCA
+#' - TCGA-THYM
+#' - TCGA-UCEC
+#' - TCGA-UCS
+#' - TCGA-UVM
 #'
-#' @return maf file and clinical information, which can be directly used by
-#'     maftools::read.maf(). The data are saved in the directory of "output_snv"
+#' If you provide more than one TCGA project names, it will combine the data.
+#' This is useful when you try to combine different cancer types, such as
+#' TCGA-COAD and TCGA-READ. Attention: there is no "matched_maf_and_clin" file
+#' in this case.
+#'
+#' @return maf file and clinical information. The data are saved in the directory
+#' of "output_snv".
+#' - **TCGA-XXX_maf.rdata**: (masked somatic mutation)maf files
+#' - **TCGA-XXX_clinical_indexed.rdata**: indexed clinical data
+#' - **TCGA-XXX_matched_maf_and_clin.rdata**: matched maf file and clinical data,
+#' the number and order of samples are exactly the same, so they can be directly
+#' used by [maftools::read.maf()].
+#'
+#' @details
+#' In GDC database the clinical data can be retrieved from different sources:
+#' - indexed clinical: a refined clinical data that is created using the XML files
+#' - XML files: original source of the data
+#' - BCR Biotab: tsv files parsed from XML files
+#'
+#' more information about clinical data, please see: [clinical section](https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/clinical.html)
+#' of the `TCGAbiolinks` vignette.
+#'
+#' @references Colaprico A, Silva TC, Olsen C, Garofano L, Cava C, Garolini D,
+#' Sabedot T, Malta TM, Pagnotta SM, Castiglioni I, Ceccarelli M, Bontempi G,
+#' Noushmehr H (2015). “ TCGAbiolinks: An R/Bioconductor package for integrative
+#' analysis of TCGA data.” Nucleic Acids Research.
+#'
 #' @export
 
 getsnvmaf <- function(project){
   if (!dir.exists("output_snv")){dir.create("output_snv")}
-  message("=> Querying begins. Make sure your network has access to GDC TCGA! \n")
+  message("=> Querying begins. \n")
   query <- TCGAbiolinks::GDCquery(
     project = project,
     data.category = "Simple Nucleotide Variation",
     data.type = "Masked Somatic Mutation",
     access = "open"
   )
-  message("=> Downloading begins. Make sure your network has access to GDC TCGA! \n")
+  message("\n=> Downloading begins. \n")
   TCGAbiolinks::GDCdownload(query)
 
   if(length(project)<2){
-    message("=> Downloading ends. Preparing begins.")
+    message("\n=> Preparing begins.")
     TCGAbiolinks::GDCprepare(query, save = T,save.filename = paste0("output_snv/",project,"_maf.rdata"))
-    clin <- TCGAbiolinks::GDCquery_clinic(project = project, type = "clinical")
-    save(clin,file = paste0("output_snv/",project,"_clin.rdata"))
+    clinical_indexed <- TCGAbiolinks::GDCquery_clinic(project = project, type = "clinical")
+    save(clinical_indexed,file = paste0("output_snv/",project,"_clinical_indexed.rdata"))
     load(file = paste0("output_snv/",project,"_maf.rdata"))
-    snv <- data
-    snv$Tumor_Sample_Barcode <- substr(snv$Tumor_Sample_Barcode,1,12)
-    index <- unique(snv$Tumor_Sample_Barcode)
-    clin_snv <- clin[clin$submitter_id %in% index, ]
+    #snv <- data
+    data$Tumor_Sample_Barcode <- substr(data$Tumor_Sample_Barcode,1,12)
+    index <- unique(data$Tumor_Sample_Barcode)
+    clin_snv <- clinical_indexed[clinical_indexed$submitter_id %in% index, ]
     clin_snv$Tumor_Sample_Barcode <- clin_snv$submitter_id
-    save(snv,clin_snv, file = paste0("output_snv/",project,"_maf_clin.rdata"))
-    message("=> Successful.")
+    save(data,clin_snv, file = paste0("output_snv/",project,"_matched_maf_and_clin.rdata"))
+    message("\n=> Successful.")
   }
   else{
     project <- paste(project,collapse = "_")
-    message("=> Downloading ends. Preparing begins.")
+    message("\n=> Preparing begins.")
     TCGAbiolinks::GDCprepare(query, save = T,save.filename = paste0("output_snv/",project,"_maf.rdata"))
-    message("=> Successful.")
+    message("\n=> Successful.")
   }
 }

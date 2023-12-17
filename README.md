@@ -20,6 +20,7 @@
 
 ```R
 # 安装bioconductor上面的R包
+# 首先要改镜像，下面是北大的镜像，有时会有问题，可更改其他镜像试试（自己百度下喽~）
 options(BioC_mirror="https://mirrors.tuna.tsinghua.edu.cn/bioconductor")
 if(!require("BiocManager")) install.packages("BiocManager")
 if(!require("TCGAbiolinks")) BiocManager::install("TCGAbiolinks")
@@ -80,9 +81,16 @@ devtools::install_github("ayueme/easyTCGA")
   - 自动整理探针信息，比如探针对应的`gene symbol`等，基于`GRCh 38`；
   - 数据保存在当前工作目录下的`output_methy`文件夹下；
   - 下载的数据为最新数据，和`GDC TCGA`[官网](https://portal.gdc.cancer.gov/)保持一致
+- `getclinical`
+  - 下载XML格式的临床数据，包括各种常见的临床信息，如生存信息、病理分期、放化疗数据、化疗药物数据等
+  - 与GDC TCGA[官网](https://portal.gdc.cancer.gov/)数据保持一致
+  - 只需要提供正确的`TCGA project`名字即可
+
 - `getpancancer_xena`
   - 实现对泛癌数据的整理，支持`TCGA`、`GTEx`，以及整合`TCGA+GTEx`
+  - 原始文件是从XENA下载的；
   - 只需提供相应的表达矩阵文件和样本信息文件即可
+  - 很费内存，可在公众号后台直接回复**pancancer**获取我整理好的
 
 - `diff_analysis`
   - 与`getmrnaexpr`，`getmirnaexpr`，`getmrnaexpr_xena`函数无缝对接，直接使用其输出结果即可，无需任何整理（默认对tumor和normal组进行差异分析）；
@@ -134,5 +142,6 @@ B站，公众号，Github，粉丝QQ群，都可以。
 - [ ] 增加对多分组差异分析的支持
 - [x] 增加对`lncRNA`的差异分析和批量生存分析支持
 - [x] 实现一些常见的分析和可视化
+- [ ] 支持自定义生存信息
 - [ ] ......
 

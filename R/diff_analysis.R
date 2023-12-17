@@ -1,23 +1,35 @@
 #' Differential analysis
 #'
 #' @description This function can automatically do differential analysis by 4
-#'     methods: DESeq2, egdeR, limma and wilcoxon test.
-#' @param exprset expression matrix prepared by getmrnaexpr()/getmirnaexpr()/
-#'     getmrnaexpr_xena(), or your own expression matrix. If use your own
-#'     expression matrix, the argument "group" must be provided
-#' @param project characters used as part of file name
-#' @param is_count if the expression matrix is count. Default is TRUE. If TRUE,
-#'     the DEA will be done by DESeq2, egdeR and limma; if FALSE, the DEA will
-#'     be done by limma and wilcoxon test
-#' @param logFC_cut threshold of logFC used for filtering the DEGs, default is 0
-#' @param pvalue_cut p value cutpoint of the DEGs, default is 1
-#' @param adjpvalue_cut adjusted p value cutpoint of the DEGs, default is 1
-#' @param group a factor with two levels, specifying the group of samples,
-#'     which should be the same length as your sample size. If use your own
-#'     expression matrix, it must be provided
-#' @param save save results to local, default is "FALSE"
+#' methods: `DESeq2`, `egdeR`, `limma` and `wilcoxon test`.
+#' @param exprset expression matrix prepared by [getmrnaexpr()]/[getmirnaexpr()]/
+#' [getmrnaexpr_xena()], or your own expression matrix. If use your own
+#' expression matrix, the argument "group" must be provided.
+#' @param project characters used as part of file name.
+#' @param is_count is the expression matrix type count? Default is TRUE. If TRUE,
+#' the DEA will be done by `DESeq2`, `egdeR` and `limma`; if FALSE, the DEA will
+#' be done by `limma` and `wilcoxon test`.
+#' @param logFC_cut threshold of logFC used for filtering the DEGs, default is 0.
+#' @param pvalue_cut p value cutpoint of the DEGs, default is 1.
+#' @param adjpvalue_cut adjusted p value cutpoint of the DEGs, default is 1.
+#' @param group a factor with two levels, specifying the group of samples, which
+#' should be the same length as your sample size. If use your own expression
+#' matrix, it must be provided.
+#' @param save save results to local, default is FALSE.
 #'
-#' @return a list of differential analysis results
+#' @return a list of differential analysis results.
+#'
+#' @references Love MI, Huber W, Anders S (2014). “Moderated estimation of fold
+#' change and dispersion for RNA-seq data with DESeq2.” Genome Biology, 15, 550.
+#'
+#' Robinson MD, McCarthy DJ, Smyth GK (2010). “edgeR: a Bioconductor package for
+#' differential expression analysis of digital gene expression data.”
+#' Bioinformatics, 26(1), 139-140.
+#'
+#' Ritchie ME, Phipson B, Wu D, Hu Y, Law CW, Shi W, Smyth GK (2015). “limma
+#' powers differential expression analyses for RNA-sequencing and microarray
+#' studies.” Nucleic Acids Research, 43(7), e47.
+#'
 #' @export
 
 diff_analysis <- function(exprset,

@@ -7,51 +7,83 @@
 getmirnaexpr(project)
 }
 \arguments{
-\item{project}{one of 33 TCGA projects
+\item{project}{valid TCGA project name(s) from 33 TCGA projects:
 \itemize{
-\item{ TCGA-ACC }
-\item{ TCGA-BLCA }
-\item{ TCGA-BRCA }
-\item{ TCGA-CESC }
-\item{ TCGA-CHOL }
-\item{ TCGA-COAD }
-\item{ TCGA-DLBC }
-\item{ TCGA-ESCA }
-\item{ TCGA-GBM }
-\item{ TCGA-HNSC }
-\item{ TCGA-KICH }
-\item{ TCGA-KIRC }
-\item{ TCGA-KIRP }
-\item{ TCGA-LAML }
-\item{ TCGA-LGG }
-\item{ TCGA-LIHC }
-\item{ TCGA-LUAD }
-\item{ TCGA-LUSC }
-\item{ TCGA-MESO }
-\item{ TCGA-OV }
-\item{ TCGA-PAAD }
-\item{ TCGA-PCPG }
-\item{ TCGA-PRAD }
-\item{ TCGA-READ }
-\item{ TCGA-SARC }
-\item{ TCGA-SKCM }
-\item{ TCGA-STAD }
-\item{ TCGA-TGCT }
-\item{ TCGA-THCA }
-\item{ TCGA-THYM }
-\item{ TCGA-UCEC }
-\item{ TCGA-UCS }
-\item{ TCGA-UVM }
-}}
+\item TCGA-ACC
+\item TCGA-BLCA
+\item TCGA-BRCA
+\item TCGA-CESC
+\item TCGA-CHOL
+\item TCGA-COAD
+\item TCGA-DLBC
+\item TCGA-ESCA
+\item TCGA-GBM
+\item TCGA-HNSC
+\item TCGA-KICH
+\item TCGA-KIRC
+\item TCGA-KIRP
+\item TCGA-LAML
+\item TCGA-LGG
+\item TCGA-LIHC
+\item TCGA-LUAD
+\item TCGA-LUSC
+\item TCGA-MESO
+\item TCGA-OV
+\item TCGA-PAAD
+\item TCGA-PCPG
+\item TCGA-PRAD
+\item TCGA-READ
+\item TCGA-SARC
+\item TCGA-SKCM
+\item TCGA-STAD
+\item TCGA-TGCT
+\item TCGA-THCA
+\item TCGA-THYM
+\item TCGA-UCEC
+\item TCGA-UCS
+\item TCGA-UVM
+}
+
+If you provide more than one TCGA project names, it will combine the data.
+This is useful when you try to combine different cancer types, such as
+TCGA-COAD and TCGA-READ. Attention: there is no "matched_clinical" file in
+this case.}
 }
 \value{
 miRNA expression matrix and clinical information. The data are saved
 in the directory of "output_miRNA_expr".
+\itemize{
+\item \strong{TCGA-XXX_miRNA.rdata}: original miRNA expression matrix, count and rpm
+file are extracted from this file.
+\item \strong{TCGA-XXX_mirna_expr_count.rdata}: miRNA count expression matrix
+\item \strong{TCGA-XXX_mirna_expr_rpm.rdata}: miRNA rpm expression matrix
+\item \strong{TCGA-XXX_clinical_indexed}: indexed clinical data
+\item \strong{TCGA-XXX_matched_clinical}: refined clinical data from indexed clinical
+data, so the number and order of samples are exactly the same as them in
+count and rpm expression matrix.
+}
 }
 \description{
 This function provides a powerful workflow to query, download
 and prepare the newest TCGA miRNA expression quantification data. All you
-have to supply is a valid TCGA project name. It will automatically save
-two types of expression matrix(counts and rpm), both in rdata and csv
-formats, and the corresponding clinical information.
+have to supply is a valid TCGA project name. It will automatically save two
+types of expression matrix(count and rpm), both in rdata and csv formats, and
+the corresponding clinical information.
+}
+\details{
+In GDC database the clinical data can be retrieved from different sources:
+\itemize{
+\item indexed clinical: a refined clinical data that is created using the XML files
+\item XML files: original source of the data
+\item BCR Biotab: tsv files parsed from XML files
+}
+
+more information about clinical data, please see: \href{https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/clinical.html}{clinical section}
+of the \code{TCGAbiolinks} vignette.
+}
+\references{
+Colaprico A, Silva TC, Olsen C, Garofano L, Cava C, Garolini D,
+Sabedot T, Malta TM, Pagnotta SM, Castiglioni I, Ceccarelli M, Bontempi G,
+Noushmehr H (2015). “ TCGAbiolinks: An R/Bioconductor package for integrative
+analysis of TCGA data.” Nucleic Acids Research.
 }

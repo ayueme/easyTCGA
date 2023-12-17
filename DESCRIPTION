@@ -1,10 +1,10 @@
 Package: easyTCGA
-Title: Make TCGA analysis easy
-Version: 0.0.1.8000
+Title: Make TCGA download and prepare easy
+Version: 0.0.3.0000
 Authors@R: 
     person(given = "Yue", family = "Li", , "1272246204@qq.com", role = c("aut", "cre"))
-Description: This packages provides several powerful functions to speed up the
-    TCGA analysis.
+Description: This packages provides several powerful functions to download and
+    prepare GDC TCGA data.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

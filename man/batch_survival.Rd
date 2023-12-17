@@ -9,30 +9,30 @@ batch_survival(
   clin,
   is_count = FALSE,
   optimal_cut = TRUE,
-  project,
-  save_data = FALSE,
+  project = NULL,
+  save = FALSE,
   min_sample_size = 5,
   print_index = TRUE
 )
 }
 \arguments{
-\item{exprset}{expression matrix from getmrnaexpr() or getmirnaexpr().}
+\item{exprset}{expression matrix from \code{\link[=getmrnaexpr]{getmrnaexpr()}} or \code{\link[=getmirnaexpr]{getmirnaexpr()}}.}
 
-\item{clin}{clinical information from getmrnaexpr() or getmirnaexpr().}
+\item{clin}{clinical information from \code{\link[=getmrnaexpr]{getmrnaexpr()}} or \code{\link[=getmirnaexpr]{getmirnaexpr()}}.}
 
-\item{is_count}{if the expression matrix is count. Default is FALSE.
-If "count", the expression matrix will be transformed by DESeq2::vst() or
-DESeq2::varianceStabilizingTransformation. For other types, the expression
-matrix will be detected automatically to decide whether to be transformed
-by log2(x + 0.1).}
+\item{is_count}{is the expression matrix count? Default is FALSE. If
+"count", the expression matrix will be transformed by \code{\link[DESeq2:vst]{DESeq2::vst()}} or
+\code{\link[DESeq2:varianceStabilizingTransformation]{DESeq2::varianceStabilizingTransformation()}}. For other types, the
+expression matrix will be detected automatically to decide whether to be
+transformed by log2(x + 0.1).}
 
-\item{optimal_cut}{use "optimal" cutpoint to do survival analysis. If FALSE,
+\item{optimal_cut}{use "optimal" cutpoint to do survival analysis? If FALSE,
 median of gene expression will be used. Optimal cutpoint is calculated by
-survminer::surv_cutpoint().}
+\code{\link[survminer:surv_cutpoint]{survminer::surv_cutpoint()}}.}
 
 \item{project}{characters used as the part of file name when saving results.}
 
-\item{save_data}{save data to local, default is FALSE.}
+\item{save}{save results to local, default is FALSE.}
 
 \item{min_sample_size}{min sample size of each group for survival analysis,
 default is 5.}
@@ -40,11 +40,12 @@ default is 5.}
 \item{print_index}{print gene index, default is TRUE.}
 }
 \value{
-a list of survival analysis results, both log-rank and cox regression
+a list of survival analysis results, both log-rank and cox regression,
+which are saved in the directory of "output_survival".
 }
 \description{
 This function can automatically do log-rank test and univariate
 cox regression according to the "optimal" cutpoint or median of gene
-expression. Support mRNA, lncRNA and miRNA expression matrix(count, tpm,
-fpkm are all supported).
+expression. Support mRNA, lncRNA and miRNA expression matrix(count, tpm, fpkm
+are all available).
 }

@@ -7,41 +7,41 @@
 getcnv(project)
 }
 \arguments{
-\item{project}{valid TCGA project name(s) from 33 TCGA projects
+\item{project}{valid TCGA project name from 33 TCGA projects:
 \itemize{
-\item{ TCGA-ACC }
-\item{ TCGA-BLCA }
-\item{ TCGA-BRCA }
-\item{ TCGA-CESC }
-\item{ TCGA-CHOL }
-\item{ TCGA-COAD }
-\item{ TCGA-DLBC }
-\item{ TCGA-ESCA }
-\item{ TCGA-GBM }
-\item{ TCGA-HNSC }
-\item{ TCGA-KICH }
-\item{ TCGA-KIRC }
-\item{ TCGA-KIRP }
-\item{ TCGA-LAML }
-\item{ TCGA-LGG }
-\item{ TCGA-LIHC }
-\item{ TCGA-LUAD }
-\item{ TCGA-LUSC }
-\item{ TCGA-MESO }
-\item{ TCGA-OV }
-\item{ TCGA-PAAD }
-\item{ TCGA-PCPG }
-\item{ TCGA-PRAD }
-\item{ TCGA-READ }
-\item{ TCGA-SARC }
-\item{ TCGA-SKCM }
-\item{ TCGA-STAD }
-\item{ TCGA-TGCT }
-\item{ TCGA-THCA }
-\item{ TCGA-THYM }
-\item{ TCGA-UCEC }
-\item{ TCGA-UCS }
-\item{ TCGA-UVM }
+\item TCGA-ACC
+\item TCGA-BLCA
+\item TCGA-BRCA
+\item TCGA-CESC
+\item TCGA-CHOL
+\item TCGA-COAD
+\item TCGA-DLBC
+\item TCGA-ESCA
+\item TCGA-GBM
+\item TCGA-HNSC
+\item TCGA-KICH
+\item TCGA-KIRC
+\item TCGA-KIRP
+\item TCGA-LAML
+\item TCGA-LGG
+\item TCGA-LIHC
+\item TCGA-LUAD
+\item TCGA-LUSC
+\item TCGA-MESO
+\item TCGA-OV
+\item TCGA-PAAD
+\item TCGA-PCPG
+\item TCGA-PRAD
+\item TCGA-READ
+\item TCGA-SARC
+\item TCGA-SKCM
+\item TCGA-STAD
+\item TCGA-TGCT
+\item TCGA-THCA
+\item TCGA-THYM
+\item TCGA-UCEC
+\item TCGA-UCS
+\item TCGA-UVM
 }}
 }
 \value{
@@ -49,6 +49,12 @@ copy number variation data. The data are saved in the directory of
 "output_cnv".
 }
 \description{
-This function can easily get the copy number variation data from
-GDC TCGA.
+This function can automatically query, download and prepare the
+copy number variation data(Masked Copy Number Segment) from GDC TCGA.
+}
+\references{
+Colaprico A, Silva TC, Olsen C, Garofano L, Cava C, Garolini D,
+Sabedot T, Malta TM, Pagnotta SM, Castiglioni I, Ceccarelli M, Bontempi G,
+Noushmehr H (2015). “ TCGAbiolinks: An R/Bioconductor package for integrative
+analysis of TCGA data.” Nucleic Acids Research.
 }
