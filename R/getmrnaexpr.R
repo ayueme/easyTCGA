@@ -85,7 +85,7 @@ getmrnaexpr <- function(project) {
     project = project,
     data.category = "Transcriptome Profiling",
     data.type = "Gene Expression Quantification",
-    workflow.type = "STAR - count"
+    workflow.type = "STAR - Counts"
   )
   message("\n=> Downloading begins. \n")
   TCGAbiolinks::GDCdownload(query, files.per.chunk = 100)

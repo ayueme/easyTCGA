@@ -20,7 +20,7 @@
 
 ```R
 # 安装bioconductor上面的R包
-# 首先要改镜像，下面是北大的镜像，有时会有问题，可更改其他镜像试试（自己百度下喽~）
+# 首先要改镜像，下面是清华的镜像，有时会有问题，可更改其他镜像试试（自己百度下喽~）
 options(BioC_mirror="https://mirrors.tuna.tsinghua.edu.cn/bioconductor")
 if(!require("BiocManager")) install.packages("BiocManager")
 if(!require("TCGAbiolinks")) BiocManager::install("TCGAbiolinks")
