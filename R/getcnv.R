@@ -51,17 +51,18 @@
 
 getcnv <- function(project){
   if (!dir.exists("output_cnv")){dir.create("output_cnv")}
-  message("=> Querying begins. \n")
+  message("=> Querying data. \n")
   query <- TCGAbiolinks::GDCquery(
     project = project,
     data.category = "Copy Number Variation",
     data.type = "Masked Copy Number Segment",
     access = "open")
-  message("=> Downloading begins. \n")
+  message("=> Downloading data. \n")
   TCGAbiolinks::GDCdownload(query, files.per.chunk = 100)
   if(length(project)>1){project <- paste(project,collapse = "_")}
-  message("\n=> Preparing begins.")
-  TCGAbiolinks::GDCprepare(query, save = T,save.filename = paste0("output_cnv/",project,"_CNV.rdata"))
+  message("\n=> Preparing data.")
+  TCGAbiolinks::GDCprepare(query, save = T,
+                           save.filename = paste0("output_cnv/",project,"_CNV.rdata"))
   message("\n=> Successful.")
 }
 
@@ -115,8 +116,8 @@ getcnv <- function(project){
 #' @return rdata files which are saved in the directory of "output_methy".
 #' - **TCGA-XXX_methy_beta_SummarizedExperiment.rdata**: SummarizedExperiment
 #'   object, all the other files are extracted from this object.
-#' - **TCGA-XXX_clinicalSE.rdata**: indexed clinical information extracted
-#'   from the SummarizedExperiment object.
+#' - **TCGA-XXX_clinicalSE.rdata**: indexed clinical data extracted from the
+#'   SummarizedExperiment object.
 #' - **TCGA-XXX_probe_info.rdata**: probe information
 #' - **TCGA-XXX_methy_beta_expr.rdata**: DNA methylation beta value matrix
 #' - **TCGA-XXX_pd.rdata**: a simple pd file including sample name and sample
@@ -143,18 +144,20 @@ getcnv <- function(project){
 
 getmethybeta <- function(project){
   if (!dir.exists("output_methy")){dir.create("output_methy")}
-  message("=> Querying begins. \n")
+  message("=> Querying data. \n")
   query <- TCGAbiolinks::GDCquery(
     project = project,
     data.category = "DNA Methylation",
     data.type = "Methylation Beta Value",
     platform = "Illumina Human Methylation 450"
   )
-  message("=> Downloading begins. \n")
+  message("=> Downloading data. \n")
   TCGAbiolinks::GDCdownload(query, files.per.chunk = 100)
   if(length(project)>1){project <- paste(project,collapse = "_")}
-  message("\n=> Preparing begins.")
-  TCGAbiolinks::GDCprepare(query,save = T,save.filename=paste0("output_methy/",project,"_methy_beta_SummarizedExperiment.rdata"))
+  message("\n=> Preparing data.")
+  TCGAbiolinks::GDCprepare(
+    query,save = T,
+    save.filename=paste0("output_methy/",project,"_methy_beta_SummarizedExperiment.rdata"))
   load(file = paste0("output_methy/",project,"_methy_beta_SummarizedExperiment.rdata"))
   clinicalSE <- as.data.frame(SummarizedExperiment::colData(data))
   save(clinicalSE, file = paste0("output_methy/",project,"_clinicalSE.rdata"))
@@ -162,8 +165,10 @@ getmethybeta <- function(project){
   save(probe_info, file = paste0("output_methy/",project,"_probe_info.rdata"))
   beta_expr <- SummarizedExperiment::assay(data)
   save(beta_expr, file = paste0("output_methy/",project,"_methy_beta_expr.rdata"))
-  pd <- data.frame(Sample_Name = colnames(beta_expr),
-                   sample_type = ifelse(as.numeric(substr(colnames(beta_expr),14,15))<10,"tumor","normal"))
+  pd <- data.frame(
+    Sample_Name = colnames(beta_expr),
+    sample_type = ifelse(as.numeric(substr(colnames(beta_expr),14,15))<10,"tumor","normal")
+    )
   save(pd, file = paste0("output_methy/",project,"_pd.rdata"))
   message("\n=> Successful.")
 }

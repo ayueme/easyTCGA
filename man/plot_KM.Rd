@@ -7,16 +7,16 @@
 plot_KM(exprset, marker, clin, optimal_cut = TRUE, return_data = TRUE)
 }
 \arguments{
-\item{exprset}{expression matrix}
+\item{exprset}{expression matrix.}
 
-\item{marker}{marker you want to display}
+\item{marker}{marker you want to display.}
 
-\item{clin}{a data.frame with two columns: "time" and "event", and 1 for
-live, 0 for dead.}
+\item{clin}{a \code{data.frame} with two columns: "time" and "event", and 0 for
+live, 1 for dead.}
 
-\item{optimal_cut}{use "optimal" cutpoint to do survival analysis. If FALSE,
+\item{optimal_cut}{use "optimal" cutpoint to do survival analysis? If FALSE,
 median of expression will be used. Optimal cutpoint is calculated by
-survminer::surv_cutpoint().}
+\code{\link[survminer:surv_cutpoint]{survminer::surv_cutpoint()}}.}
 
 \item{return_data}{return the data for plotting, default is TRUE.}
 }

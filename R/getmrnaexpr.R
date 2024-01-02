@@ -80,31 +80,38 @@
 
 getmrnaexpr <- function(project) {
   if (!dir.exists("output_mRNA_lncRNA_expr")){dir.create("output_mRNA_lncRNA_expr")}
-  message("=> Querying begins. \n")
+  message("=> Querying data. \n")
   query <- TCGAbiolinks::GDCquery(
     project = project,
     data.category = "Transcriptome Profiling",
     data.type = "Gene Expression Quantification",
     workflow.type = "STAR - Counts"
   )
-  message("\n=> Downloading begins. \n")
+  message("\n=> Downloading data. \n")
   TCGAbiolinks::GDCdownload(query, files.per.chunk = 100)
+
   message("\n=> Preparing SummarizedExperiment.\n")
   if(length(project)>1){project <- paste(project,collapse = "_")}
-  TCGAbiolinks::GDCprepare(query, save = T, save.filename = paste0("output_mRNA_lncRNA_expr/", project, "_SummarizedExperiment.rdata"))
+  TCGAbiolinks::GDCprepare(
+    query, save = T,
+    save.filename=paste0("output_mRNA_lncRNA_expr/",project,"_SummarizedExperiment.rdata"))
+
   message("\n=> Preparing mRNA and lncRNA.")
   load(file = paste0("output_mRNA_lncRNA_expr/", project, "_SummarizedExperiment.rdata"))
   #se <- data
   clinicalSE <- as.data.frame(SummarizedExperiment::colData(data)) # 临床信息
   save(clinicalSE, file = paste0("output_mRNA_lncRNA_expr/", project, "_clinicalSE.rdata"))
   clinicalSE <- apply(clinicalSE,2,as.character)
-  utils::write.csv(clinicalSE,paste0("output_mRNA_lncRNA_expr/", project, "_clinicalSE.csv"),row.names = F)
-
+  utils::write.csv(clinicalSE,
+                   paste0("output_mRNA_lncRNA_expr/", project, "_clinicalSE.csv"),
+                   row.names = F)
   rowdata <- SummarizedExperiment::rowData(data)
   # 基因名
   gene_info <- as.data.frame(rowdata@listData)
   save(gene_info,file = paste0("output_mRNA_lncRNA_expr/", project, "_gene_info.rdata"))
-  utils::write.csv(gene_info,paste0("output_mRNA_lncRNA_expr/", project, "_gene_info.csv"),quote = F,row.names = F)
+  utils::write.csv(gene_info,
+                   paste0("output_mRNA_lncRNA_expr/", project, "_gene_info.csv"),
+                   quote = F,row.names = F)
 
   se_mrna <- data[rowdata$gene_type == "protein_coding", ]
   se_lnc <- data[rowdata$gene_type == "lncRNA", ]
@@ -125,8 +132,11 @@ getmrnaexpr <- function(project) {
   tmp <- tmp[!duplicated(tmp$symbol_mrna),]
   rownames(tmp) <- tmp[,2]
   mrna_expr_count <- tmp[,c(-1,-2)]
-  save(mrna_expr_count,file = paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_count.rdata"))
-  utils::write.csv(mrna_expr_count,paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_count.csv"),quote = F)
+  save(mrna_expr_count,
+       file = paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_count.rdata"))
+  utils::write.csv(mrna_expr_count,
+                   paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_count.csv"),
+                   quote = F)
 
   mrna_expr_tpm <- cbind(data.frame(symbol_mrna), as.data.frame(expr_tpm_mrna))
   rowm <- as.data.frame(rowMeans(mrna_expr_tpm[, -1]))
@@ -136,8 +146,11 @@ getmrnaexpr <- function(project) {
   tmp <- tmp[!duplicated(tmp$symbol_mrna),]
   rownames(tmp) <- tmp[,2]
   mrna_expr_tpm <- tmp[,c(-1,-2)]
-  save(mrna_expr_tpm,file = paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_tpm.rdata"))
-  utils::write.csv(mrna_expr_tpm,paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_tpm.csv"),quote = F)
+  save(mrna_expr_tpm,
+       file = paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_tpm.rdata"))
+  utils::write.csv(mrna_expr_tpm,
+                   paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_tpm.csv"),
+                   quote = F)
 
   mrna_expr_fpkm <- cbind(data.frame(symbol_mrna), as.data.frame(expr_fpkm_mrna))
   rowm <- as.data.frame(rowMeans(mrna_expr_fpkm[, -1]))
@@ -147,8 +160,11 @@ getmrnaexpr <- function(project) {
   tmp <- tmp[!duplicated(tmp$symbol_mrna),]
   rownames(tmp) <- tmp[,2]
   mrna_expr_fpkm <- tmp[,c(-1,-2)]
-  save(mrna_expr_fpkm,file = paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_fpkm.rdata"))
-  utils::write.csv(mrna_expr_fpkm,paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_fpkm.csv"),quote = F)
+  save(mrna_expr_fpkm,
+       file = paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_fpkm.rdata"))
+  utils::write.csv(mrna_expr_fpkm,
+                   paste0("output_mRNA_lncRNA_expr/", project, "_mrna_expr_fpkm.csv"),
+                   quote = F)
 
   lncrna_expr_count <- cbind(data.frame(symbol_lnc), as.data.frame(expr_count_lnc))
   rowm <- as.data.frame(rowMeans(lncrna_expr_count[, -1]))
@@ -158,8 +174,11 @@ getmrnaexpr <- function(project) {
   tmp <- tmp[!duplicated(tmp$symbol_lnc),]
   rownames(tmp) <- tmp[,2]
   lncrna_expr_count <- tmp[,c(-1,-2)]
-  save(lncrna_expr_count,file = paste0("output_mRNA_lncRNA_expr/", project, "_lncrna_expr_count.rdata"))
-  utils::write.csv(lncrna_expr_count,paste0("output_mRNA_lncRNA_expr/", project, "_lncrna_expr_count.csv"),quote = F)
+  save(lncrna_expr_count,
+       file = paste0("output_mRNA_lncRNA_expr/", project, "_lncrna_expr_count.rdata"))
+  utils::write.csv(lncrna_expr_count,
+                   paste0("output_mRNA_lncRNA_expr/", project, "_lncrna_expr_count.csv"),
+                   quote = F)
 
   lncrna_expr_tpm <- cbind(data.frame(symbol_lnc), as.data.frame(expr_tpm_lnc))
   rowm <- as.data.frame(rowMeans(lncrna_expr_tpm[, -1]))
@@ -169,8 +188,11 @@ getmrnaexpr <- function(project) {
   tmp <- tmp[!duplicated(tmp$symbol_lnc),]
   rownames(tmp) <- tmp[,2]
   lncrna_expr_tpm <- tmp[,c(-1,-2)]
-  save(lncrna_expr_tpm,file = paste0("output_mRNA_lncRNA_expr/", project, "_lncrna_expr_tpm.rdata"))
-  utils::write.csv(lncrna_expr_tpm,paste0("output_mRNA_lncRNA_expr/", project, "_lncrna_expr_tpm.csv"),quote = F)
+  save(lncrna_expr_tpm,
+       file = paste0("output_mRNA_lncRNA_expr/", project, "_lncrna_expr_tpm.rdata"))
+  utils::write.csv(lncrna_expr_tpm,
+                   paste0("output_mRNA_lncRNA_expr/", project, "_lncrna_expr_tpm.csv"),
+                   quote = F)
 
   lncrna_expr_fpkm <- cbind(data.frame(symbol_lnc), as.data.frame(expr_fpkm_lnc))
   rowm <- as.data.frame(rowMeans(lncrna_expr_fpkm[, -1]))
@@ -180,8 +202,11 @@ getmrnaexpr <- function(project) {
   tmp <- tmp[!duplicated(tmp$symbol_lnc),]
   rownames(tmp) <- tmp[,2]
   lncrna_expr_fpkm <- tmp[,c(-1,-2)]
-  save(lncrna_expr_fpkm,file = paste0("output_mRNA_lncRNA_expr/", project, "_lncrna_expr_fpkm.rdata"))
-  utils::write.csv(lncrna_expr_fpkm,paste0("output_mRNA_lncRNA_expr/", project, "_lncrna_expr_fpkm.csv"),quote = F)
+  save(lncrna_expr_fpkm,
+       file = paste0("output_mRNA_lncRNA_expr/", project, "_lncrna_expr_fpkm.rdata"))
+  utils::write.csv(lncrna_expr_fpkm,
+                   paste0("output_mRNA_lncRNA_expr/", project, "_lncrna_expr_fpkm.csv"),
+                   quote = F)
   message("\n=> Successful.")
 }
 

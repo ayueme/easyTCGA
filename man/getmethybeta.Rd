@@ -53,8 +53,8 @@ rdata files which are saved in the directory of "output_methy".
 \itemize{
 \item \strong{TCGA-XXX_methy_beta_SummarizedExperiment.rdata}: SummarizedExperiment
 object, all the other files are extracted from this object.
-\item \strong{TCGA-XXX_clinicalSE.rdata}: indexed clinical information extracted
-from the SummarizedExperiment object.
+\item \strong{TCGA-XXX_clinicalSE.rdata}: indexed clinical data extracted from the
+SummarizedExperiment object.
 \item \strong{TCGA-XXX_probe_info.rdata}: probe information
 \item \strong{TCGA-XXX_methy_beta_expr.rdata}: DNA methylation beta value matrix
 \item \strong{TCGA-XXX_pd.rdata}: a simple pd file including sample name and sample

@@ -155,6 +155,8 @@ batch_survival <- function(exprset,
     }
     res.logrank <- data.frame(do.call(rbind, logrank.result))
     names(res.logrank) <- c("gene", "p.value")
+    # 这里再把基因名改回来：
+    res.logrank$gene <- gsub("\\.","-",res.logrank$gene)
 
     res_survival[[1]] <- res.logrank
     names(res_survival)[[1]] <- "res.logrank"
@@ -172,6 +174,8 @@ batch_survival <- function(exprset,
     }
     res.cox <- data.frame(do.call(rbind, cox.result))
     names(res.cox)[c(1, 3, 5)] <- c("gene", "HR", "Wald_z")
+    # 这里再把基因名改回来：
+    res.cox$gene <- gsub("\\.","-",res.cox$gene)
 
     res_survival[[2]] <- res.cox
     names(res_survival)[[2]] <- "res.cox"

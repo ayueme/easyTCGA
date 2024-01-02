@@ -1,8 +1,8 @@
 #' Get GDC TCGA clinical data
 #'
 #' @description
-#' Get TCGA clinical data from XML files, including general infromation, survival,
-#' tumor stage, drug, radiation, eta.
+#' Get TCGA clinical data, including indexed clinical data, general information,
+#' survival, tumor stage, drug, radiation, eta.
 #'
 #' @param project valid TCGA project name from 33 TCGA projects:
 #' - TCGA-ACC
@@ -40,16 +40,14 @@
 #' - TCGA-UVM
 #'
 #' @return rdata files which are saved in the directory of "output_clinical".
-#' - **TCGA-XXX_clinicalXML_admin**: admin data extracted from XML files.
-#' - **TCGA-XXX_clinicalXML_drug**: drug data extracted from XML files.
-#' - **TCGA-XXX_clinicalXML_followUp**: follow up data extracted from XML files.
-#' - **TCGA-XXX_clinicalXML_newTumorEvent**: new tumor event data extracted
-#'   from XML files.
-#' - **TCGA-XXX_clinicalXML_patient**: general patient clinical data xtracted
-#'   from XML files.
-#' - **TCGA-XXX_clinicalXML_radiation**: radiation data extracted from XML files.
-#' - **TCGA-XXX_clinicalXML_stageEvent**: pathologic stage data extracted from
-#'   XML files.
+#' - **TCGA-XXX_clinicalXML_admin.rdata**: admin data extracted from XML files.
+#' - **TCGA-XXX_clinicalXML_drug.rdata**: drug data extracted from XML files.
+#' - **TCGA-XXX_clinicalXML_followUp.rdata**: follow up data extracted from XML files.
+#' - **TCGA-XXX_clinicalXML_newTumorEvent.rdata**: new tumor event data extracted from XML files.
+#' - **TCGA-XXX_clinicalXML_patient.rdata**: general clinical data extracted from XML files.
+#' - **TCGA-XXX_clinicalXML_radiation.rdata**: radiation data extracted from XML files.
+#' - **TCGA-XXX_clinicalXML_stageEvent.rdata**: pathologic stage data extracted from XML files.
+#' - **TCGA-XXX_clinical_indexed.rdata**: indexed clinical data.
 #'
 #' @details
 #' In GDC database the clinical data can be retrieved from different sources:
@@ -60,6 +58,8 @@
 #' more information about clinical data, please see: [clinical section](https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/clinical.html)
 #' of the `TCGAbiolinks` vignette.
 #'
+#' [getclinical()] can retrieve both the indexed and XML clinical data.
+#'
 #' @references Colaprico A, Silva TC, Olsen C, Garofano L, Cava C, Garolini D,
 #' Sabedot T, Malta TM, Pagnotta SM, Castiglioni I, Ceccarelli M, Bontempi G,
 #' Noushmehr H (2015). “ TCGAbiolinks: An R/Bioconductor package for integrative
@@ -67,10 +67,11 @@
 #'
 #' @export
 #'
+
 getclinical <- function(project){
   if (!dir.exists("output_clinical")){dir.create("output_clinical")}
 
-  message("=> Querying begins. \n")
+  message("=> Querying data. \n")
   query <- TCGAbiolinks::GDCquery(
     project = project,
     data.category = "Clinical",
@@ -78,10 +79,18 @@ getclinical <- function(project){
     data.format = "bcr xml"
   )
 
-  message("\n=> Downloading begins. \n")
+  message("\n=> Downloading data. \n")
   TCGAbiolinks::GDCdownload(query)
 
   message("\n=> Parsing clinical data.\n")
+  # sapply(c("patient","drug","follow_up","radiation","admin","stage_event","new_tumor_event"),
+  #        function(x){
+  #          clinicalXML_patient <- TCGAbiolinks::GDCprepare_clinic(query, clinical.info = x)
+  #          save(clinicalXML_patient, file = paste0("output_clinical/", project, "_XML_",x,".rdata"))
+  #
+  #        }
+  # )
+
   clinicalXML_patient <- TCGAbiolinks::GDCprepare_clinic(query, clinical.info = "patient")
   save(clinicalXML_patient, file = paste0("output_clinical/", project, "_clinicalXML_patient.rdata"))
   clinicalXML_drug <- TCGAbiolinks::GDCprepare_clinic(query, clinical.info = "drug")
@@ -97,8 +106,13 @@ getclinical <- function(project){
   clinicalXML_newTumorEvent <- TCGAbiolinks::GDCprepare_clinic(query, clinical.info = "new_tumor_event")
   save(clinicalXML_newTumorEvent, file = paste0("output_clinical/", project, "_clinicalXML_newTumorEvent.rdata"))
 
-  message("\n=> Successful.\n")
+  # indexed clinical not available for TCGA-TGCT
+  if(!project == "TCGA-TCGCT"){
+    clinical_indexed <- TCGAbiolinks::GDCquery_clinic(project)
+    save(clinical_indexed, file = paste0("output_clinical/", project, "_clinical_indexed.rdata"))
+  }
 
+  message("\n=> Successful.\n")
 }
 
 

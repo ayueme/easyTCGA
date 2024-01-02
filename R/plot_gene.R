@@ -126,13 +126,13 @@ plot_gene_paired <- function(exprset, marker, return_data = TRUE){
 
 #' K-M plot according to the expression of marker
 #'
-#' @param exprset expression matrix
-#' @param marker marker you want to display
-#' @param clin a data.frame with two columns: "time" and "event", and 1 for
-#'    live, 0 for dead.
-#' @param optimal_cut use "optimal" cutpoint to do survival analysis. If FALSE,
+#' @param exprset expression matrix.
+#' @param marker marker you want to display.
+#' @param clin a `data.frame` with two columns: "time" and "event", and 0 for
+#'    live, 1 for dead.
+#' @param optimal_cut use "optimal" cutpoint to do survival analysis? If FALSE,
 #'    median of expression will be used. Optimal cutpoint is calculated by
-#'    survminer::surv_cutpoint().
+#'    [survminer::surv_cutpoint()].
 #' @param return_data return the data for plotting, default is TRUE.
 #'
 #' @return K-M plot and plotting data

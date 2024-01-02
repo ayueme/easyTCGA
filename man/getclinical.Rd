@@ -47,21 +47,19 @@ getclinical(project)
 \value{
 rdata files which are saved in the directory of "output_clinical".
 \itemize{
-\item \strong{TCGA-XXX_clinicalXML_admin}: admin data extracted from XML files.
-\item \strong{TCGA-XXX_clinicalXML_drug}: drug data extracted from XML files.
-\item \strong{TCGA-XXX_clinicalXML_followUp}: follow up data extracted from XML files.
-\item \strong{TCGA-XXX_clinicalXML_newTumorEvent}: new tumor event data extracted
-from XML files.
-\item \strong{TCGA-XXX_clinicalXML_patient}: general patient clinical data xtracted
-from XML files.
-\item \strong{TCGA-XXX_clinicalXML_radiation}: radiation data extracted from XML files.
-\item \strong{TCGA-XXX_clinicalXML_stageEvent}: pathologic stage data extracted from
-XML files.
+\item \strong{TCGA-XXX_clinicalXML_admin.rdata}: admin data extracted from XML files.
+\item \strong{TCGA-XXX_clinicalXML_drug.rdata}: drug data extracted from XML files.
+\item \strong{TCGA-XXX_clinicalXML_followUp.rdata}: follow up data extracted from XML files.
+\item \strong{TCGA-XXX_clinicalXML_newTumorEvent.rdata}: new tumor event data extracted from XML files.
+\item \strong{TCGA-XXX_clinicalXML_patient.rdata}: general clinical data extracted from XML files.
+\item \strong{TCGA-XXX_clinicalXML_radiation.rdata}: radiation data extracted from XML files.
+\item \strong{TCGA-XXX_clinicalXML_stageEvent.rdata}: pathologic stage data extracted from XML files.
+\item \strong{TCGA-XXX_clinical_indexed.rdata}: indexed clinical data.
 }
 }
 \description{
-Get TCGA clinical data from XML files, including general infromation, survival,
-tumor stage, drug, radiation, eta.
+Get TCGA clinical data, including indexed clinical data, general information,
+survival, tumor stage, drug, radiation, eta.
 }
 \details{
 In GDC database the clinical data can be retrieved from different sources:
@@ -73,6 +71,8 @@ In GDC database the clinical data can be retrieved from different sources:
 
 more information about clinical data, please see: \href{https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/clinical.html}{clinical section}
 of the \code{TCGAbiolinks} vignette.
+
+\code{\link[=getclinical]{getclinical()}} can retrieve both the indexed and XML clinical data.
 }
 \references{
 Colaprico A, Silva TC, Olsen C, Garofano L, Cava C, Garolini D,

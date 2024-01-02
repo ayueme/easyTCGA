@@ -6,7 +6,7 @@
 \usage{
 diff_analysis(
   exprset,
-  project,
+  project = NULL,
   is_count = TRUE,
   logFC_cut = 0,
   pvalue_cut = 1,
@@ -18,7 +18,7 @@ diff_analysis(
 \arguments{
 \item{exprset}{expression matrix prepared by \code{\link[=getmrnaexpr]{getmrnaexpr()}}/\code{\link[=getmirnaexpr]{getmirnaexpr()}}/
 \code{\link[=getmrnaexpr_xena]{getmrnaexpr_xena()}}, or your own expression matrix. If use your own
-expression matrix, the argument "group" must be provided.}
+expression matrix, the argument \code{group} must be provided.}
 
 \item{project}{characters used as part of file name.}
 
@@ -56,4 +56,8 @@ Bioinformatics, 26(1), 139-140.
 Ritchie ME, Phipson B, Wu D, Hu Y, Law CW, Shi W, Smyth GK (2015). “limma
 powers differential expression analyses for RNA-sequencing and microarray
 studies.” Nucleic Acids Research, 43(7), e47.
+
+Li, Y., Ge, X., Peng, F. et al (2022). Exaggerated false positives by popular
+differential expression methods when analyzing human population samples.
+Genome Biol 23, 79.
 }

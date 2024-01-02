@@ -57,10 +57,10 @@ in the directory of "output_miRNA_expr".
 file are extracted from this file.
 \item \strong{TCGA-XXX_mirna_expr_count.rdata}: miRNA count expression matrix
 \item \strong{TCGA-XXX_mirna_expr_rpm.rdata}: miRNA rpm expression matrix
-\item \strong{TCGA-XXX_clinical_indexed}: indexed clinical data
-\item \strong{TCGA-XXX_matched_clinical}: refined clinical data from indexed clinical
-data, so the number and order of samples are exactly the same as them in
-count and rpm expression matrix.
+\item \strong{TCGA-XXX_clinical_indexed.rdata}: indexed clinical data
+\item \strong{TCGA-XXX_matched_clinical.rdata}: refined clinical data from indexed
+clinical data, so the number and order of samples are exactly the same as
+them in count and rpm expression matrix.
 }
 }
 \description{

@@ -4,7 +4,7 @@
 #' methods: `DESeq2`, `egdeR`, `limma` and `wilcoxon test`.
 #' @param exprset expression matrix prepared by [getmrnaexpr()]/[getmirnaexpr()]/
 #' [getmrnaexpr_xena()], or your own expression matrix. If use your own
-#' expression matrix, the argument "group" must be provided.
+#' expression matrix, the argument `group` must be provided.
 #' @param project characters used as part of file name.
 #' @param is_count is the expression matrix type count? Default is TRUE. If TRUE,
 #' the DEA will be done by `DESeq2`, `egdeR` and `limma`; if FALSE, the DEA will
@@ -30,10 +30,14 @@
 #' powers differential expression analyses for RNA-sequencing and microarray
 #' studies.” Nucleic Acids Research, 43(7), e47.
 #'
+#' Li, Y., Ge, X., Peng, F. et al (2022). Exaggerated false positives by popular
+#' differential expression methods when analyzing human population samples.
+#' Genome Biol 23, 79.
+#'
 #' @export
 
 diff_analysis <- function(exprset,
-                          project,
+                          project = NULL,
                           is_count = TRUE,
                           logFC_cut = 0,
                           pvalue_cut = 1,
@@ -135,6 +139,7 @@ diff_analysis <- function(exprset,
 
   if (save) {
     if (!dir.exists("output_diff")) {dir.create("output_diff")}
+    if(is.null(project))stop("project should be provided!")
     save(res_diff, file = paste0("output_diff/", project, "_diff_results.rdata"))
   }
   message("=> Analysis done.")
