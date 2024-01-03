@@ -210,5 +210,5 @@ getmrnaexpr <- function(project) {
   message("\n=> Successful.")
 }
 
-
+utils::globalVariables(c("data"))
 

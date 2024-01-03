@@ -36,13 +36,8 @@
 #'
 #' @export
 
-diff_analysis <- function(exprset,
-                          project = NULL,
-                          is_count = TRUE,
-                          logFC_cut = 0,
-                          pvalue_cut = 1,
-                          adjpvalue_cut = 1,
-                          group = NULL,
+diff_analysis <- function(exprset, project = NULL, is_count = TRUE, logFC_cut = 0,
+                          pvalue_cut = 1, adjpvalue_cut = 1, group = NULL,
                           save = FALSE) {
   # check group
   if (!is.null(group)) {
@@ -146,3 +141,4 @@ diff_analysis <- function(exprset,
   return(res_diff)
 }
 
+utils::globalVariables(c("log2FoldChange","padj","pvalue","logFC","adj.P.Val","P.Value","FDR","PValue"))

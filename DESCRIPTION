@@ -1,6 +1,6 @@
 Package: easyTCGA
 Title: Make TCGA download and prepare easy
-Version: 0.0.4.1000
+Version: 0.0.4.2000
 Authors@R: 
     person(given = "Yue", family = "Li", , "1272246204@qq.com", role = c("aut", "cre"))
 Description: This packages provides several powerful functions to download and

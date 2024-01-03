@@ -85,7 +85,7 @@ getsnvmaf <- function(project){
       save.filename = paste0("output_snv/",project,"_maf.rdata"))
     clinical_indexed <- TCGAbiolinks::GDCquery_clinic(project = project,
                                                       type = "clinical")
-    save(clinical_indexed,
+    save(clinical_indexed, # 要不要保存？
          file = paste0("output_snv/",project,"_clinical_indexed.rdata"))
     load(file = paste0("output_snv/",project,"_maf.rdata"))
     #snv <- data

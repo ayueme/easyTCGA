@@ -139,7 +139,7 @@ getmirnaexpr <- function(project) {
     message("\n=> Preparing clinical data.")
     clinical_indexed <- TCGAbiolinks::GDCquery_clinic(project = project,
                                                       type = "clinical")
-    save(clinical_indexed,
+    save(clinical_indexed, # 这个要不要保存呢？
          file = paste0("output_miRNA_expr/",project,"_clinical_indexed.rdata"))
     clin_matched <- clinical_indexed[match(substr(colnames(mirna_expr_count),1,12),
                                            clinical_indexed$submitter_id),]

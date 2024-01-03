@@ -118,7 +118,7 @@ plot_gene_paired <- function(exprset, marker, return_data = TRUE){
   }
 }
 
-
+utils::globalVariables(c("sample_id"))
 
 
 

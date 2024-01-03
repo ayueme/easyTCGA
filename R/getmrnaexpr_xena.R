@@ -91,3 +91,5 @@ getmrnaexpr_xena <- function(expr_file, clin_file = NULL){
   }
 
 }
+
+utils::globalVariables(c("type","gene_type"))

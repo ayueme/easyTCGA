@@ -240,3 +240,4 @@ getpancancer_xena <- function(tcga_expr_file,tcga_clin_file,
 
 }
 
+utils::globalVariables(c("..index",".SD","rmea","gene_name","primary_site","project","sample_id"))
