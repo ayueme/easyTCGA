@@ -43,7 +43,7 @@
 #'
 #' If you provide more than one TCGA project names, it will combine the data.
 #' This is useful when you try to combine different cancer types, such as
-#' TCGA-COAD and TCGA-READ.
+#' TCGA-COAD and TCGA-READ(c("TCGA-COAD","TCGA-READ")).
 #'
 #' @return rdata and csv files which are saved in the directory of "output_mRNA_lncRNA_expr".
 #' - **TCGA-XXX_SummarizedExperiment.rdata**: SummarizedExperiment object,
@@ -65,9 +65,9 @@
 #' - XML files: original source of the data
 #' - BCR Biotab: tsv files parsed from XML files
 #'
-#' the clinical data extracted from the SummarizedExperiment object is indexed
+#' The clinical data extracted from the SummarizedExperiment object is indexed
 #' clinical, and subtype information from marker TCGA papers are added, these
-#' information have prefix "paper_". more information about clinical data,
+#' information have prefix "paper_". More information about clinical data,
 #' please see: [clinical section](https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/clinical.html) of the `TCGAbiolinks` vignette.
 #'
 #' @references Colaprico A, Silva TC, Olsen C, Garofano L, Cava C, Garolini D,

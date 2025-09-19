@@ -1,5 +1,7 @@
 # `easyTCGA`：让初学者也能感受"征服"`TCGA`的喜悦
 
+> 我会定期测试这个包能不能用，最近测试是20250919，能用，没有任何问题。有问题的请更新`tcgabiolinks`包和所有的`tidy`系列R包。
+
 ## 为什么要写这个R包
 
 生信数据挖掘必不可少要学习`TCGA`数据库，但是对于新手，经常卡在第一步：**下载和整理数据**。第一步完成了，又会卡在第二步，第三步：差异分析，生存分析......
@@ -50,9 +52,19 @@ devtools::install_github("ayueme/easyTCGA")
 > 解决TCGA（GTEx）数据下载和整理问题，顺便实现一些常见的分析和可视化
 
 - `getmrnaexpr`
-  - 只需要提供正确的`TCGA project`名字即可；
-  - 自动下载并整理`mRNA`和`lncRNA`的`counts，tpm，fpkm`共6种表达矩阵（直接从官网的原始数据提取，未进行任何修改，所以是没有经过log转换的），以及对应的临床信息，临床信息样本顺序和表达矩阵样本顺序完全一致，无需再次整理；
-  - 自动保存以上6种表达矩阵和临床信息到当前工作目录下的`output_mRNA_lncRNA_expr`文件夹下，并且同时保存`rdata`和`csv`两种文件格式；
+  - 只需要提供正确的`TCGA project`名字即可，比如：`getmrnaexpr("TCGA-COAD")`
+  - 如果你想同时下载并整理类似的癌种，整合成一个大的矩阵，比如**结肠癌**和**直肠癌**，那么直接使用`getmrnaexpr(c("TCGA-COAD","TCGA-READ))`即可；
+  - 自动下载并整理`mRNA`和`lncRNA`的`counts，tpm，fpkm`共6种表达矩阵（直接从**官网的原始数据提取，未进行任何修改**，所以是没有经过log转换的），以及对应的临床信息，临床信息样本顺序和表达矩阵样本顺序完全一致，无需再次整理；
+  - 自动保存以上6种表达矩阵和临床信息到当前工作目录下的`output_mRNA_lncRNA_expr`文件夹下，并且同时保存`rdata`和`csv`两种文件格式（如下所示）；TCGA的临床信息非常复杂，所以我专门写了一篇文章介绍，详情请看：[TCGA临床数据（化疗数据、用药反应等）和生存信息（4种临床结局）整理](https://mp.weixin.qq.com/s/FSdQ3UbsGSzop2ETVNkwkA)
+    - **TCGA-XXX_SummarizedExperiment.rdata**: SummarizedExperiment object, all the other files are extracted from this object.
+    - **TCGA-XXX_clinicalSE.rdata**: indexed clinical information extracted from the SummarizedExperiment object.
+    - **TCGA-XXX_gene_info.rdata**: gene information, including HGNC Gene Symbol, Ensembl ID, gene type, eta.
+    - **TCGA-XXX_mrna_expr_count.rdata**: mRNA count expression matrix
+    - **TCGA-XXX_mrna_expr_tpm.rdata**: mRNA tpm expression matrix
+    - **TCGA-XXX_mrna_expr_fpkm.rdata**: mRNA fpkm expression matrix
+    - **TCGA-XXX_lncrna_expr_count.rdata**: lncRNA count expression matrix
+    - **TCGA-XXX_lncrna_expr_tpm.rdata**: lncRNA tpm expression matrix
+    - **TCGA-XXX_lncrna_expr_fpkm.rdata**: lncRNA fpkm expression matrix
   - 下载的数据为最新数据，和`GDC TCGA`[官网](https://portal.gdc.cancer.gov/)保持一致；
   - 支持通过手动下载的TCGA数据进行自动整理并完成以上过程（可参考b站教程：[easyTCGA：1行代码整理TCGA的6种表达矩阵和临床信息](https://www.bilibili.com/video/BV15c411J7bJ/?share_source=copy_web&vd_source=abc21f68a9e2a784892483fd768dbafa)）
   - lncRNA鉴别参考：[Biotypes (ensembl.org)](http://useast.ensembl.org/info/genome/genebuild/biotypes.html)
@@ -85,12 +97,13 @@ devtools::install_github("ayueme/easyTCGA")
   - 下载XML格式的临床数据，包括各种常见的临床信息，如生存信息、病理分期、放化疗数据、化疗药物数据等
   - 与GDC TCGA[官网](https://portal.gdc.cancer.gov/)数据保持一致
   - 只需要提供正确的`TCGA project`名字即可
-
+  - TCGA的临床信息非常复杂，所以我专门写了一篇文章介绍，详情请看：[TCGA临床数据（化疗数据、用药反应等）和生存信息（4种临床结局）整理](https://mp.weixin.qq.com/s/FSdQ3UbsGSzop2ETVNkwkA)
+  
 - `getpancancer_xena`
   - 实现对泛癌数据的整理，支持`TCGA`、`GTEx`，以及整合`TCGA+GTEx`
   - 原始文件是从XENA下载的；
   - 只需提供相应的表达矩阵文件和样本信息文件即可
-  - 很费内存，可在公众号后台直接回复**pancancer**获取我整理好的
+  - 很费内存（约60G），可在公众号后台直接回复**pancancer**获取我整理好的
 
 - `diff_analysis`
   - 与`getmrnaexpr`，`getmirnaexpr`，`getmrnaexpr_xena`函数无缝对接，直接使用其输出结果即可，无需任何整理（默认对tumor和normal组进行差异分析）；
@@ -104,7 +117,7 @@ devtools::install_github("ayueme/easyTCGA")
   - 支持`count，tpm，fpkm`3种格式的数据，如果是`counts`，则通过`DESeq2::vst()`进行转换，如果是`tpm/fpkm`，则进行`log2(x + 0.1)`转换；
   - 支持打印基因序号到屏幕，方便定位有问题的基因
 - 可视化函数
-  - 主要用来进行一些简单的探索；每个函数都会返回画图数据，方便你自己探索；
+  - 主要用来进行一些简单的探索；**每个函数都会返回画图数据**，方便你自己探索；
   - `plot_gene`：任意数量基因在任意癌种（TCGA33种其中之一都可以）的任意分组中的表达量箱线图；
   - `plot_gene_paired`：任意基因在某一癌种配对样本中的表达量配对箱线图；
   - `plot_km`：根据任意基因的表达量分组，并画出K-M生存曲线（支持最佳截点）

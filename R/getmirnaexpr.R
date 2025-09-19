@@ -62,7 +62,7 @@
 #' - XML files: original source of the data
 #' - BCR Biotab: tsv files parsed from XML files
 #'
-#' more information about clinical data, please see: [clinical section](https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/clinical.html)
+#' More information about clinical data, please see: [clinical section](https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/clinical.html)
 #' of the `TCGAbiolinks` vignette.
 #'
 #' @references Colaprico A, Silva TC, Olsen C, Garofano L, Cava C, Garolini D,
